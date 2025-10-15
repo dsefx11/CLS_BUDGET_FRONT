@@ -1,0 +1,339 @@
+<section id="Content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">วางแผนโครงการ</h4>
+                    <div class="flex-shrink-0">
+                        <label for=" searchInput" class="form-label">ค้นหา :</label>
+                    </div>
+                    <div class="search-box d-inline-block mb-2">
+                        <input type="text" class="form-control search" placeholder="Search..."
+                            [(ngModel)]="service.searchTerm" (input)="onFilter(service.searchTerm)">
+                        <i class="ri-search-line search-icon"></i>
+                    </div>
+                </div><!-- end card header -->
+                <div class="card-body"> <!--Start Content-->
+                    <div style="height:15px"></div>
+                    <div class="row align-items-center">
+                        <div class="col-md-5">
+                            <label class="form-label">
+                                หน่วยงาน:
+                            </label>
+                            <!-- <select id="departmentSelect" class="form-select mb-3" [(ngModel)]="Department_Id"
+                                (click)="get_main_Data()">
+                                <option value="" disabled selected>เลือกหน่วยงาน</option>
+                                <option *ngFor="let department of List_Mas_Department"
+                                    [value]="department.Department_Id">
+                                    {{ department.Department_Name }}
+                                </option>
+                            </select> -->
+                            <ng-select [items]="List_Mas_Department" bindLabel="Department_Name"
+                                bindValue="Department_Id" [(ngModel)]="Department_Id"
+                                [placeholder]="'กรุณาเลือก'" (change)="get_main_Data()">
+                                <ng-template ng-option-tmp let-h1="item">
+                                    {{ h1.Department_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="col-md-5">
+                            <label class="form-label">
+                                ประเด็น:
+                            </label>
+                            <ng-select [items]="List_Mas_Issue_Project" bindLabel="Issue_Project_Name"
+                                bindValue="Issue_Project_Id" [(ngModel)]="Budget_Plan_Project.Issue_Project_Id"
+                                [placeholder]="'กรุณาเลือก'" (change)="choose_issue_project()">
+                                <ng-template ng-option-tmp let-h2="item">
+                                    {{ h2.Issue_Project_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-soft-primary waves-effect waves-light"
+                                data-bs-toggle="modal" data-bs-target="#exampleModalgrid"
+                                (click)="btn_add_fullModal(fullDataModal, 0, old_Budget_Plan_Project,Budget_Plan_Project.Issue_Project_Id)">
+                                เพิ่มคำขอ
+                            </button>
+                        </div>
+                    </div>
+                    <!--List_Main_Data Table - รายการวางแผนโครงการ-->
+                    <div style="height:15px"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-gridjs" style="width:100%" >
+                                <thead>
+                                    <tr class="tr-center">
+                                        <th >ลำดับ</th>
+                                        <th class="sort" (click)="onSort('Plan_Name')">
+                                            แผนงาน
+                                        </th>
+                                        <th class="sort" (click)="onSort('Product_Name')">
+                                            ผลผลิต
+                                        </th>
+                                        <th class="sort" (click)="onSort('Activity_Name')">
+                                            กิจกรรม</th>
+                                        <th class="sort" (click)="onSort('Budget_Type')" style="width: 5%;">
+                                            หมวดงบ
+                                        </th>
+                                        <th class="sort" (click)="onSort('Expense_Type')" style="width: 10%;">
+                                            หมวดค่าใช้จ่าย
+                                        </th>
+                                        <th class="sort" (click)="onSort('Expense_List')" style="width: 10%;">
+                                            รายการค่าใช้จ่าย
+                                        </th>
+                                        <th class="sort" style="width: 7%;">
+                                            งบประมาณ
+                                        </th>
+                                        <th>แก้ไข</th>
+                                        <th>ลบ</th>
+                                    </tr>
+                                    </thead>    
+                                    <tbody>
+                                        
+                                            <tr class="tr-center" *ngFor="let item of filteredTranList; let i = index">
+                                                <td style="text-align: center;">{{ i + 1 }}</td>
+                                    <td>
+                                        <!-- [term]="service.Plan_Name" ไม่ต้องใช้ ไว้ใช้กับ ค้นหา มันใช้ไม่ได้ -->
+                                        <ngb-highlight [result]="item.Plan_Name">{{item.Plan_Name}}</ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight
+                                            [result]=" item.Product_Name">{{item.Product_Name}}</ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight
+                                            [result]="item.Activity_Name">{{item.Activity_Name}}</ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="item.Budget_Type">{{item.Budget_Type}}</ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight
+                                            [result]="item.Expense_Type">{{item.Expense_Type}}</ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight
+                                            [result]="item.Expense_List">{{item.Expense_List}}</ngb-highlight>
+                                    </td>
+                                    <td>
+                                        {{MasterService.show_fix(item.Total || 0)}}
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-ghost-warning waves-effect waves-light"
+                                            data-bs-toggle="modal" data-bs-target="#Modal1"
+                                            (click)="btn_add_fullModal(fullDataModal,item.Budget_Plan_Project.Plan_Project_Id, item.Budget_Plan_Project,item.Budget_Plan_Project.Issue_Project_Id)">
+                                            <i class="ri-edit-2-fill"
+                                                style="color: orange;font-size: 20px;"></i></button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-ghost-danger waves-effect waves-light"
+                                            (click)="btn_del_Budget_Req(item.Budget_Plan_Project.Plan_Project_Id)">
+                                            <i class="ri-delete-bin-6-fill"
+                                                style="color: orangered;font-size: 20px;"></i>
+                                        </button>
+                                    </td>
+                                            </tr>
+                                    </tbody>
+                            </table>
+                        </div>
+                        </div>  
+                </div>
+                </div>
+            </div>
+        </div>
+</section>
+
+
+<ng-template #fullDataModal let-modal>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="Modal1">เพิ่มคำของบดำเนินงาน</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                (click)="modal.dismiss('Close click')"></button>
+        </div>
+        <div class="modal-body">
+            <div class="card">
+                <!-- <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">ตัวชี้วัด</h4>
+                    <div class="flex-shrink-0">
+                        <div class="form-check form-switch form-switch-right form-switch-md">
+                        </div>
+                    </div>
+                </div> -->
+                <!-- end card header -->
+                <div class="card-body">
+                    <div style="height:15px"></div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            
+                            <label class="form-label">
+                                แผนงาน <span class="text-danger">*</span>
+                            </label>
+                            <ng-select [items]="List_Mas_Plan" bindLabel="Plan_Name" bindValue="Plan_Id"
+                                [(ngModel)]="Budget_Plan_Project.Fk_Plan_Id" [placeholder]="'กรุณาเลือก'"
+                                (change)="choose_plan()">
+                                <ng-template ng-option-tmp let-s1="item">
+                                    {{ s1.Plan_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">
+                                ผลผลิต <span class="text-danger">*</span>
+                            </label>
+                            <ng-select [items]="List_Mas_Product" bindLabel="Product_Name" bindValue="Product_Id"
+                                [(ngModel)]="Budget_Plan_Project.Fk_Product_Id" [placeholder]="'กรุณาเลือก'"
+                                (change)="choose_product()">
+                                <ng-template ng-option-tmp let-s2="item">
+                                    {{ s2.Product_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">
+                                กิจกรรม <span class="text-danger">*</span>
+                            </label>
+                            <ng-select [items]="List_Mas_Activity" bindLabel="Activity_Name" bindValue="Activity_Id"
+                                [(ngModel)]="Budget_Plan_Project.Fk_Activity_Id" [placeholder]="'กรุณาเลือก'"
+                                (change)="choose_activity()">
+                                <ng-template ng-option-tmp let-s3="item">
+                                    {{ s3.Activity_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">
+                                เป้าหมาย <span class="text-danger">*</span>
+                            </label>
+                            <div class="d-flex gap-2">
+                                <input type="number" class="form-control" onkeypress="return isNumber(event);"
+                                    [(ngModel)]="Budget_Plan_Project.Purpose_Name" placeholder="กรุณาจำนวนกรอกเป้าหมาย">
+                                <ng-select [items]="List_Purpose_Unit" bindLabel="Unit_Name" bindValue="Unit_Id"
+                                    [(ngModel)]="Budget_Plan_Project.Purpose_Unit_Id" [placeholder]="'กรุณาเลือก'"
+                                    (change)="choose_purpost_unit()" class="flex-shrink-0" style="min-width: 120px;">
+                                    <ng-template ng-option-tmp let-s4="item">
+                                        {{ s4.Unit_Name}}
+                                    </ng-template>
+                                </ng-select>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="height: 15px;"></div>
+                    <div class="row">
+
+                        <div class="col-md-3">
+                            <label class="form-label">
+                                กิจกรรมหลักหน่วยงาน
+                            </label>
+                            <ng-select [items]="List_Mas_Activity_Dep_Main" bindLabel="Activity_Name"
+                                bindValue="Activity_Dep_Id" [(ngModel)]="Budget_Plan_Project.Activity_Dep_Id"
+                                [placeholder]="'กรุณาเลือก'" (change)="choose_activity_dep_main()">
+                                <ng-template ng-option-tmp let-s5="item">
+                                    {{ s5.Activity_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">กิจกรรมรองหน่วยงาน</label>
+                            <ng-select [items]="List_Mas_Activity_Dep_Second" bindLabel="Activity_Name"
+                                bindValue="Activity_Dep_Second_Id" [(ngModel)]="Budget_Plan_Project.Activity_Dep_Second_Id"
+                                [placeholder]="'กรุณาเลือก'" (change)="choose_activity_dep_second()">
+                                <ng-template ng-option-tmp let-s6="item">
+                                    {{ s6.Activity_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">กิจกรรมย่อย</label>
+                            <ng-select [items]="List_Mas_Activity_Dep_Sub" bindLabel="Activity_Name"
+                                bindValue="Activity_Dep_Sub_Id" [(ngModel)]="Budget_Plan_Project.Activity_Dep_Sub_Id"
+                                [placeholder]="'กรุณาเลือก'" (change)="choose_activity_dep_sub()">
+                                <ng-template ng-option-tmp let-s7="item">
+                                    {{ s7.Activity_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="col-md-3">
+                            <br>  
+                            <label class="form-label">หมวดงบ : </label>
+                            {{Budget_Plan_Project.Budget_Type}}
+                        </div>
+                    </div>
+                    <div style="height:15px"></div>
+                    <div class="row">
+                        <div class="col-md-3" *ngIf="Budget_Plan_Project.Plan_Project_Id === 0">
+                            <label class="form-label">หมวดค่าใช้จ่าย</label>
+                            <ng-select [items]="List_Mas_Expense_Type" bindLabel="Expense_Type_Name"
+                                bindValue="Expense_Type_Id" [(ngModel)]="Budget_Plan_Project.Fk_Expense_Type"
+                                [placeholder]="'กรุณาเลือก'" (change)="choose_Expense_Type()">
+                                <ng-template ng-option-tmp let-s4="item">
+                                    {{ s4.Expense_Type_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="col-md-3" *ngIf="Budget_Plan_Project.Plan_Project_Id !== 0">
+                            <br>
+                            <label class="form-label">หมวดค่าใช้จ่าย : </label>
+                            {{Budget_Plan_Project.Expense_Type}}
+                        </div>
+                        <div class="col-md-3" *ngIf="Budget_Plan_Project.Plan_Project_Id === 0">
+                            <label class="form-label">รายการค่าใช้จ่าย</label>
+                            <ng-select [items]="List_Mas_Expense_List" bindLabel="Expense_Name" bindValue="Expense_Id"
+                                [(ngModel)]="Budget_Plan_Project.Fk_Expense_List" [placeholder]="'กรุณาเลือก'"
+                                (change)="choose_form()">
+                                <ng-template ng-option-tmp let-s4="item">
+                                    {{ s4.Expense_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="col-md-3" *ngIf="Budget_Plan_Project.Plan_Project_Id !== 0">
+                            <br>
+                            <label class="form-label">รายการค่าใช้จ่าย : </label>
+                            {{Budget_Plan_Project.Expense_List}}
+                        </div>
+                    </div>
+                    <div style="height:15px"></div>
+                    <div class="row" *ngIf="(Budget_Plan_Project.Total || 0) != 0">
+                        <div class="col-1">
+                            <h3>รวมทั้งสิ้น:</h3>
+                        </div>
+                        <div class="col-4">
+                            <!-- <h3 style="color:red">{{calculatedTotal_Request}}</h3> -->
+                        </div>
+                    </div>
+                    <br />
+                    <hr />
+                    <br />
+                
+                    <!-- <Plan_Project_Request_Detail_Form></Plan_Project_Request_Detail_Form> -->
+                    <div *ngIf="formPartial == 'Project_Development_Form'">
+                        <Plan_Project_Request_Detail_Form [Form_Name]="Form_Name"
+                        [Budget_Plan_Project]="Budget_Plan_Project"
+                        [Budget_Plan_Project_Detail]="Budget_Plan_Project_Detail"
+                        [Bgyear]="Bgyear" [Department_Id] = "Department_Id" 
+                        [Budget_Request_Detail]="Budget_Request_Detail"
+                        [List_Mas_Project]="List_Mas_Project"
+                        [add]="add"
+                        [Budget_Plan_Project_Detail]="Budget_Plan_Project_Detail"
+                        [Budget_Request_Income_Strategy_Sub_Item]="Budget_Request_Income_Strategy_Sub_Item"
+                        [Budget_Request_Income_Consistency_MS_Plan_Item]="Budget_Request_Income_Consistency_MS_Plan_Item"
+                        [List_Budget_Plan_Project_Strategy_Sub_Item]="List_Budget_Plan_Project_Strategy_Sub_Item">
+                    </Plan_Project_Request_Detail_Form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="btn_save()">บันทึก</button>
+            <button type="button" class="btn btn-danger"><a href="javascript:void(0);" data-bs-dismiss="modal"
+                    id="cdFullmodal" (click)="modal.close('Close click')"><i
+                        class="ri-close-line me-1 align-middle"></i>
+                    Close</a></button>
+            <!-- <a href="javascript:void(0);"
+                    class="btn btn-link link-success fw-medium" data-bs-dismiss="modal" id="cdFullmodal"
+                    (click)="modal.close('Close click')"><i class="ri-close-line me-1 align-middle"></i>
+                    Close</a> -->
+
+        </div>
+    </div><!-- /.modal-content -->
+</ng-template><!-- /.modal-dialog -->

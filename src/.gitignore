@@ -1,0 +1,56 @@
+# --- Ignore everything by default ---
+*
+
+# --- Keep essential configuration files ---
+!.gitignore
+!angular.json
+!package.json
+!package-lock.json
+!tsconfig*.json
+!karma.conf.js
+!README.md
+
+# --- Keep source folder (but still filter inside) ---
+!src/
+src/*
+
+# --- Keep app folder ---
+!src/app/
+src/app/*
+
+# --- ✅ Keep only pages folder and its content ---
+!src/app/pages/
+!src/app/pages/**
+
+# --- Keep routing, module, main, index, styles (for app to run) ---
+!src/app/app-routing.module.ts
+!src/app/app.module.ts
+!src/main.ts
+!src/index.html
+!src/styles.scss
+!src/environments/
+src/environments/**
+
+# --- Keep assets if needed (images/icons) ---
+!src/assets/
+src/assets/**
+
+# --- Ignore cache, build, and dependencies ---
+/.angular/
+/dist/
+/node_modules/
+/.tmp/
+/coverage/
+/.cache/
+
+# --- Ignore IDE/editor stuff ---
+.vscode/
+.cursor/
+.idea/
+.DS_Store
+Thumbs.db
+
+# --- Ignore log/temp files ---
+*.log
+*.tmp
+*.bak

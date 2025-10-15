@@ -1,0 +1,367 @@
+<div style="height:15px"></div>
+<div class="row">
+    <div class="col-lg-6 text-left">
+        <span style="font-size:10pt;font-weight:bold" class="badge badge-gradient-secondary">ขอมูลโครงการ</span>
+    </div>
+
+</div>
+<div style="height:15px"></div>
+<div class="row">
+    <div class="col-lg-1 text-right">
+        <label> ชื่อโครงการ :</label>
+    </div>
+    <div class="col-lg-4 text-left">
+        <span style="color:orangered;font-weight:bold">
+            <input type="text" class="form-control" placeholder="กรุณากรอกชื่อโครงการ" [(ngModel)]="Budget_Plan_Project.Topic_Project_Name">
+        </span>
+    </div>
+    <div class="col-lg-1 text-right">
+        สอดรับโครงการ :
+    </div>
+    <div class="col-lg-4 text-left">
+        <ng-select [items]="List_Mas_Project" bindLabel="Project_Name" bindValue="Project_Id"
+            [(ngModel)]="Budget_Plan_Project.Project_Id" (ngModelChange)="Choose_Mas_Project_Detail()"
+            [placeholder]="'กรุณาเลือก'">
+            <ng-template ng-option-tmp let-tab2D1="item">
+                {{ tab2D1.Project_Name}}
+            </ng-template>
+        </ng-select>
+    </div>
+</div>
+<div style="height:15px"></div>
+<div class="row">
+    <div class="col-lg-1 text-right">
+        ลักษณะโครงการ :
+    </div>
+    <div class="col-lg-4 text-left">
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" [checked]="Budget_Plan_Project.Used_BG == 1" (change)="Choose_Used_BG(Budget_Plan_Project.Used_BG, 1)">
+            <label class="form-check-label">ใช้งบประมาณ</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" [checked]="Budget_Plan_Project.Used_BG == 2"  (change)="Choose_Used_BG(Budget_Plan_Project.Used_BG, 2)">
+            <label class="form-check-label">ไม่ใช้งบประมาณ</label>
+        </div>
+    </div>
+    <div class="col-lg-1 text-right">
+        ดำเนินการเอง :
+    </div>
+    <div class="col-lg-1 text-left">
+        <input type="number" class="form-control" placeholder="% ที่ดำเนินการเอง" [(ngModel)]="Budget_Plan_Project.Proceed_Qty" (ngModelChange)="Cal_Proceed_Qty(Budget_Plan_Project.Proceed_Qty)">
+    </div>
+    <div class="col-lg-1 text-right">
+        จัดจ้าง :
+    </div>
+    <div class="col-lg-1 text-left">
+        <input type="number" class="form-control" placeholder="% ที่จัดจ้าง" [(ngModel)]="Budget_Plan_Project.Po_Qty" (ngModelChange)="Cal_Po_Qty(Budget_Plan_Project.Po_Qty)"/>
+    </div>
+</div>
+<div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-1 text-right">
+            ประเภทโครงการ :
+        </div>
+        <div class="col-lg-4 text-left">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" [checked]="Budget_Plan_Project.Project_Type_Id == 1"
+                    (change)="Choose_Project_Type_Id(Budget_Plan_Project.Project_Type_Id, 1)" />
+                <label class="form-check-label">ใหม่</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" [checked]="Budget_Plan_Project.Project_Type_Id == 2"
+                    (change)="Choose_Project_Type_Id(Budget_Plan_Project.Project_Type_Id, 2)" />
+                <label class="form-check-label">ต่อเนื่อง</label>
+            </div>
+
+
+        </div>
+        <div class="col-lg-1 text-right">
+            สถานะโครงการ :
+        </div>
+        <div class="col-lg-4 text-left">
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" [checked]="Budget_Plan_Project.Project_Status_Id == 1"
+                    (change)="Choose_Project_Status_Id(Budget_Plan_Project.Project_Status_Id, 1)" />
+                <label class="form-check-label">อยู่ระหว่างดำเนินการ</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" [checked]="Budget_Plan_Project.Project_Status_Id == 2"
+                    (change)="Choose_Project_Status_Id(Budget_Plan_Project.Project_Status_Id, 2)" />
+                <label class="form-check-label">ยังไม่ดำเนินการ</label>
+            </div>
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-1 text-right">
+            จำนวนปีที่ดำเนินโครงการ : 
+            <br>
+            <span style="color:red;font-size:small">*ผูกผันได้ไม่เกิน 5 ปี</span>
+        </div>
+        <div class="col-lg-1 text-left">
+            <input type="number" class="form-control" placeholder="จำนวนปีที่ดำเนินโครงการ"
+                [(ngModel)]="Budget_Plan_Project.Project_Year_Count" onkeypress="return isNumber(event);"
+                (keyup)="select_year_count('New')" />
+        </div>
+        <div class="col-lg-1 text-right" *ngIf="Budget_Plan_Project.Project_Type_Id == 2">
+            ปีนี้เป็นปีที่ :
+        </div>
+        <div class="col-lg-1 text-left" *ngIf="Budget_Plan_Project.Project_Type_Id == 2">
+            <input type="text" class="form-control" placeholder="ปีนี้เป็นปีที่"
+                [(ngModel)]="Budget_Plan_Project.Project_Year_Number" />
+        </div>
+
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-1">
+            ปีที่เริ่มต้น
+            <input type="text" class="form-control" placeholder="ปีที่เริ่มต้น"
+                [(ngModel)]="Budget_Plan_Project.Project_Year_Start" disabled>
+        </div>
+        <div class="col-lg-1">
+            ปีที่สิ้นสุด
+            <input type="text" class="form-control" placeholder="ปีที่สิ้นสุด"
+                [(ngModel)]="Budget_Plan_Project.Project_Year_End" disabled>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <hr />
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- Nav tabs -->
+            <ul ngbNav #Border="ngbNav" [activeId]="1" class="nav nav-tabs nav-border-top nav-border-top-primary mb-3">
+                <li [ngbNavItem]="1">
+                    <a ngbNavLink>
+                        ส่วนที่ 1
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div class="d-flex">
+                            <div class="flex-grow-1 ms-2">
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-lg-6 text-left">
+                                        <h4 style="font-weight:bold;text-decoration: underline;color: orangered;">
+                                            ความเชื่อมโยงกับแผนในระดับต่างๆ</h4>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-lg-6 text-left">
+                                        <h4 style="font-weight:bold;text-decoration: underline;color: orangered;">
+                                            แผนระดับที่ 1</h4>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-lg-6 text-left">
+                                        <h5><span style="font-weight:bold;color: orangered;">* </span><span
+                                                style="font-weight:bold;">1.1 ยุทธศาสตร์ชาติที่เกี่ยวข้องโดยตรง
+                                                (Z)</span></h5>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="table">
+                                            <table class="table table-gridjs"
+                                                style="width: 100%; font-size: 12px; margin: 0 auto;">
+                                                <tbody>
+                                                    <tr>
+                                                        <th style="width: 10%;" class="text-right">
+                                                            ยุทธศาสตร์ชาติด้าน
+                                                        </th>
+                                                        <td style="padding: 6px 8px;">
+                                                            <ng-select [items]="List_Mas_National_Strategy"
+                                                                bindLabel="Strategy_Name" bindValue="Strategy_Id"
+                                                                [(ngModel)]="Budget_Plan_Project_Detail.Strategy_Id"
+                                                                (ngModelChange)="Choose_Mas_National_Strategy_Detail()"
+                                                                [placeholder]="'กรุณาเลือก'">
+                                                                <ng-template ng-option-tmp let-tab2D1="item">
+                                                                    {{ tab2D1.Strategy_Name}}
+                                                                </ng-template>
+                                                            </ng-select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width: 10%;" class="text-right">
+                                                            ประเด็น
+                                                        </th>
+                                                        <td style="padding: 6px 8px;">
+                                                            <ng-select [items]="List_Mas_Strategy_Head_Issue"
+                                                                bindLabel="Issues_Name" bindValue="Issues_Id"
+                                                                [(ngModel)]="Budget_Plan_Project_Detail.Issues_Id"
+                                                                (ngModelChange)="Choose_Mas_Strategy_Head_Issue_Detail()"
+                                                                [placeholder]="'กรุณาเลือก'">
+                                                                <ng-template ng-option-tmp let-tab2D2="item">
+                                                                    {{ tab2D2.Issues_Name}}
+                                                                </ng-template>
+                                                            </ng-select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width: 10%;" class="text-right">
+                                                            ประเด็นย่อย
+                                                        </th>
+                                                        <td style="padding: 6px 8px;">
+                                                            <ng-select [items]="List_Mas_Strategy_Sub_Issue"
+                                                                bindLabel="Sub_Issues_Name" bindValue="Sub_Issues_Id"
+                                                                [(ngModel)]="Budget_Plan_Project_Detail.Sub_Issues_Id"
+                                                                (ngModelChange)="Choose_Mas_Strategy_Sub_Issue_Detail()"
+                                                                [placeholder]="'กรุณาเลือก'">
+                                                                <ng-template ng-option-tmp let-tab2D3="item">
+                                                                    {{ tab2D3.Sub_Issues_Name}}
+                                                                </ng-template>
+                                                            </ng-select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width: 10%;" class="text-right">
+                                                            เป้าหมาย
+                                                        </th>
+                                                        <td style="padding: 6px 8px;">
+                                                            <textarea class="form-control" rows="2"
+                                                                style="font-size: 12px; height: 80px;"
+                                                                [(ngModel)]="Budget_Plan_Project_Detail.Target_Name"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-lg-6 text-left">
+                                        <h5><span style="font-weight:bold;color: orangered;">* </span><span
+                                                style="font-weight:bold;">1.2 ยุทธศาสตร์ชาติที่เกี่ยวข้องในระดับรอง
+                                                (Z)</span></h5>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-lg-12 text-left">
+                                        <button type="button" class="btn btn-soft-primary waves-effect waves-light"
+                                            (click)="add_form_Strategy_Sub_Item_detail()">เพิ่มรายการ</button>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="table">
+                                            <table class="table table-gridjs"
+                                                style="width: 100%; font-size: 12px; margin: 0 auto;">
+                                                <tbody
+                                                    *ngFor="let item_Strategy_Sub of List_Budget_Plan_Project_Strategy_Sub_Item; let i = index">
+                                                    <tr>
+                                                        <th style="width: 10%;" class="text-right">
+                                                            <span
+                                                                style="font-weight:bold;color: orangered;font-size: 16px;">{{i
+                                                                + 1}} </span>ยุทธศาสตร์ชาติด้าน
+                                                        </th>
+                                                        <td style="padding: 6px 8px;">
+                                                            <ng-select [items]="List_Sec_Mas_National_Strategy"
+                                                                bindLabel="Strategy_Name" bindValue="Strategy_Id"
+                                                                [(ngModel)]="item_Strategy_Sub.Strategy_Id"
+                                                                (ngModelChange)="Choose_Sub_Mas_National_Strategy_Detail(item_Strategy_Sub)"
+                                                                [placeholder]="'กรุณาเลือก'">
+                                                                <ng-template ng-option-tmp let-tab2D4="item">
+                                                                    {{ tab2D4.Strategy_Name}}
+                                                                </ng-template>
+                                                            </ng-select>
+                                                        </td>
+                                                        <th style="width: 1%; padding: 6px 8px;" rowspan="5">
+                                                            <button type="button"
+                                                                class="btn btn-ghost-danger waves-effect waves-light"
+                                                                style="padding: 2px 6px;"
+                                                                (click)="btn_del_Strategy_Sub_Item_Detail_item(i)">
+                                                                <i class="ri-delete-bin-6-fill"
+                                                                    style="color: orangered;font-size: 16px;"></i>
+                                                            </button>
+                                                        </th>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width: 10%;" class="text-right">
+                                                            ประเด็น
+                                                        </th>
+                                                        <td style="padding: 6px 8px;">
+                                                            <ng-select
+                                                                [items]="item_Strategy_Sub.List_Sec_Sub_Mas_Strategy_Head_Issue"
+                                                                bindLabel="Issues_Name" bindValue="Issues_Id"
+                                                                [(ngModel)]="item_Strategy_Sub.Issues_Id"
+                                                                (ngModelChange)="Choose_Sub_Mas_Strategy_Head_Issue_Detail(item_Strategy_Sub)"
+                                                                [placeholder]="'กรุณาเลือก'">
+                                                                <ng-template ng-option-tmp let-tab2D5="item">
+                                                                    {{ tab2D5.Issues_Name}}
+                                                                </ng-template>
+                                                            </ng-select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width: 10%;" class="text-right">
+                                                            ประเด็นย่อย
+                                                        </th>
+                                                        <td style="padding: 6px 8px;">
+                                                            <ng-select
+                                                                [items]="item_Strategy_Sub.List_Sec_Strategy_Sub_Issue"
+                                                                bindLabel="Sub_Issues_Name" bindValue="Sub_Issues_Id"
+                                                                [(ngModel)]="item_Strategy_Sub.Sub_Issues_Id"
+                                                                (ngModelChange)="Choose_Sub_Mas_Strategy_Sub_Issue_Detail(item_Strategy_Sub)"
+                                                                [placeholder]="'กรุณาเลือก'">
+                                                                <ng-template ng-option-tmp let-tab2D6="item">
+                                                                    {{ tab2D6.Sub_Issues_Name}}
+                                                                </ng-template>
+                                                            </ng-select>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width: 10%;" class="text-right">
+                                                            เป้าหมาย
+                                                        </th>
+                                                        <td style="padding: 6px 8px;">
+                                                            <textarea class="form-control"
+                                                                [(ngModel)]="item_Strategy_Sub.Target_Name" rows="2"
+                                                                style="font-size: 12px; height: 80px;"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width: 10%;" class="text-right">
+                                                            ความสอดคล้องของโครงการกับยุทธศาสตร์ชาติ (โปรดอธิบาย)
+                                                        </th>
+                                                        <td style="padding: 6px 8px;">
+                                                            <textarea class="form-control"
+                                                                [(ngModel)]="item_Strategy_Sub.Consistency_Name"
+                                                                rows="2"
+                                                                style="font-size: 12px; height: 80px;"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <th style="width: 10%;" class="text-right">
+                                                            ตัวชี้วัดที่
+                                                        </th>
+                                                        <td style="padding: 6px 8px;">
+                                                            <textarea class="form-control" rows="2"
+                                                                style="font-size: 12px; height: 80px;"
+                                                                [(ngModel)]="item_Strategy_Sub.Indicators_Name"></textarea>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Body In Tap1 / ส่่วนที่ 2 -->
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+            </ul>
+            <div class="tab-content text-muted">
+                <div [ngbNavOutlet]="Border"></div>
+            </div>
+        </div><!--end col-->
+    </div>

@@ -1,0 +1,115 @@
+<section class="card card-content">
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-md-12 text-left">
+            <span style="font-size:14pt;font-weight:bold">
+                {{Form_Name}}
+            </span>
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-soft-primary waves-effect waves-light"
+                (click)="add_form_detail()">เพิ่มข้อมูล</button>
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table">
+                <table class="table table-gridjs">
+                    <thead>
+                        <tr class="tr-center">
+                            <th style="width: 5%;">ลำดับ</th>
+                            <th style="width: 20%;">
+                                รายการ
+                            </th>
+                            <th style="width: 15%;">
+                                จำนวน
+                            </th>
+                            <th style="width: 10%;">
+                                หน่วยนับ
+                            </th>
+                            <th>
+                                ราคา/หน่วย
+                            </th>
+                            <th style="width: 10%;">
+                                รวม
+                            </th>
+                            <th style="width: 10%;">
+                                หมายเหตุ
+                            </th>
+                            <th style="width: 5%;">ลบ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(data of List_Budget_Request_Detail_Item; track $index){
+                        <tr class="tr-center">
+                            <td style="text-align: center;">
+                                {{ $index + 1 }}
+                            </td>
+                            <td>
+                                <ng-select [items]="List_Mas_Expense_Material_List" bindLabel="Material_Name"
+                                    bindValue="Material_Id" [(ngModel)]="data.Material_Id"
+                                    [placeholder]="'กรุณาเลือก'" (change)="choose_ddl_Expense_Material($index,data)">
+                                    <ng-template ng-option-tmp let-s1="item">
+                                        {{ s1.Material_Name}}
+                                    </ng-template>
+                                </ng-select>
+                                <div *ngIf="data.Material_Id == 666">
+                                    <br />
+                                    <input type="text" [(ngModel)]="data.Material_Id" class="form-control" placeholder="กรุณาระบุ" />
+                                </div>
+                            </td>
+                            <td>
+                                <input class="form-control" type="number" title="จำนวน" [(ngModel)]="data.Quantity"
+                                    onkeypress="return isNumber(event);" (keyup)="cal_qty_item($index,data)" />
+                            </td>
+                            <td>
+                                <ng-select [items]="List_Mas_Unit" bindLabel="Unit_Name"
+                                    bindValue="Unit_Id" [(ngModel)]="data.Fk_Unit_Id"
+                                    [placeholder]="'กรุณาเลือก'" (change)="choose_unit(data)">
+                                    <ng-template ng-option-tmp let-s1="item">
+                                        {{ s1.Unit_Name}}
+                                    </ng-template>
+                                </ng-select>
+                            </td>
+                            <td>
+                                <input class="form-control" type="number" title="ราคา/หน่วย"
+                                    [(ngModel)]="data.Cost_Amount" disabled />
+                            </td>
+                            <td>
+                                <input class="form-control" type="number" title="รวม จำนวน x ราคา/หน่วย"
+                                     [(ngModel)]="data.Total" disabled />
+                            </td>
+                            <td>
+                                <input type="text" title="หมายเหตุ" [(ngModel)]="data.Remark" class="form-control" />
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-ghost-danger waves-effect waves-light" (click)="btn_del_Detail_item($index)">
+                                    <i class="ri-delete-bin-6-fill" style="color: orangered;font-size: 20px;"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align:right">รวม :</td>
+                        <td style="text-align:center">
+                            {{calculatedTotal }}
+                            {{calculatedTotal_Front}}
+
+                        </td>
+                        <td></td>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

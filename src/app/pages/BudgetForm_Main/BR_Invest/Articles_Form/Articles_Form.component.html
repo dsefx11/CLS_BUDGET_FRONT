@@ -1,0 +1,309 @@
+<section class="card card-content">
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-md-12 text-left">
+            <span style="font-size:14pt;font-weight:bold">
+                {{Form_Name}}
+            </span>
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-soft-primary waves-effect waves-light"
+                (click)="add_form_detail()">เพิ่มข้อมูล</button>
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-12" style="overflow-x: scroll; width: 100%" >
+            <div class="table">
+                <table class="table table-gridjs" style="width:200%">
+                    <thead>
+                        <tr class="tr-center">
+                            <th style="width: 1%;" rowspan="2">ลำดับ</th>
+                            <th style="width: 20%;" rowspan="2">
+                                รายการ
+                            </th>
+                            <th style="width:10%" colspan="2">
+                                คุณสมบัติของครุภัณฑ์
+                            </th>
+                            <th style="width:4%" rowspan="2">
+                                จำนวน
+                            </th>
+                            <th style="width:1%" rowspan="2">
+                                หน่วยนับ
+                            </th>
+                            <th style="width:5%" rowspan="2">
+                                ราคา/หน่วย
+                            </th>
+                            <th style="width:5%" rowspan="2">
+                                รวมทั้งสิ้น
+                            </th>
+                            <th colspan="3" style="width:5%">
+                                วัตถุประสงค์
+                            </th>
+                            <th style="width:5%" rowspan="2">
+                                ระยะเวลาใช้งาน
+                            </th>
+                            <th style="width:8%" rowspan="2">
+                                ทะเบียนครุภัณฑ์เดิม
+                            </th>
+                            <th colspan="2" style="width:6%">
+                                ดำเนินการจัดซื้อจัดจ้าง
+                            </th>
+                            <th style="width:6%" rowspan="2">
+                                เหตุผลความจำเป็น
+                            </th>
+                            <th style="width:6%" rowspan="2">
+                                แนบไฟล์ใบเสนอราคา
+                            </th>
+                            <th style="width:6%" rowspan="2">
+                                คุณลักษณะของครุภัณฑ์ (Spec)
+                            </th>
+                            <th style="width: 1%;" rowspan="2">ลบ</th>
+                        </tr>
+                        <tr class="tr-center">
+                            <th>
+                                ในมาตรฐาน
+                            </th>
+                            <th>
+                                นอกมาตรฐาน
+                            </th>
+                            <th style="width:6%">ทดแทนของเดิม</th>
+                            <th style="width:7%">เพิ่มปริมานเป้าหมาย</th>
+                            <th style="width:5%">เพิ่มประสิทธิภาพ</th>
+                            <th>ไตรมาส1</th>
+                            <th>คาดว่าจะดำเนินการ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(data of List_Budget_Request_Detail_Item; track $index){
+                        <tr class="tr-center">
+                            <td style="text-align: center;">
+                                {{ $index + 1 }}
+                            </td>
+                            <td>
+                                <ng-select [items]="List_Mas_Expense_Material_List" [(ngModel)]="data.Material_Id"
+                                    bindLabel="Material_Name" bindValue="Material_Id" [placeholder]="'กรุณาเลือก'"
+                                    (change)="choose_ddl_Expense_Material(data)">
+                                    <ng-template ng-option-tmp let-s1="item">
+                                        {{ s1.Material_Name}}
+                                    </ng-template>
+                                </ng-select>
+                                <div *ngIf="data.Material_Id == 447">
+                                    <input type="text" class="form-control" placeholder="กรุณาระบุ"
+                                        [(ngModel)]="data.Remark" />
+                                </div>
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" [checked]="data.Po_Type_Id === 1"
+                                    (change)="onChangeCheckBox_Po_Type(data.Po_Type_Id, 1,data)" />
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" [checked]="data.Po_Type_Id === 2"
+                                    (change)="onChangeCheckBox_Po_Type(data.Po_Type_Id, 2,data)" />
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" title="qty" [(ngModel)]="data.Quantity"
+                                    (keyup)="cal_qty_item(data)" />
+                            </td>
+                            <td>
+                                <ng-select [items]="List_Mas_Unit" [(ngModel)]="data.Fk_Unit_Id" bindLabel="Unit_Name"
+                                    bindValue="Unit_Id" [placeholder]="'กรุณาเลือก'"
+                                    (change)="choose_ddl_Mas_Unit(data)">
+                                    <ng-template ng-option-tmp let-s2="item">
+                                        {{ s2.Unit_Name}}
+                                    </ng-template>
+                                </ng-select>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" placeholder="ดึงข้อมูล" [(ngModel)]="data.Price"
+                                    disabled />
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" title="รวมทั้งสิ้น จำนวน x ราคา/หน่วย"
+                                    [(ngModel)]="data.Total" disabled />
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" [checked]="data.Purpose_Id === 1"
+                                    (change)="onChangeCheckBox_Purpose(data.Purpose_Id, 1,data)" />
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" [checked]="data.Purpose_Id === 2"
+                                    (change)="onChangeCheckBox_Purpose(data.Purpose_Id, 2,data)" />
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" [checked]="data.Purpose_Id === 3"
+                                    (change)="onChangeCheckBox_Purpose(data.Purpose_Id, 3,data)" />
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" title="ระยะเวลาใช้งาน" [(ngModel)]="data.Times"
+                                    onkeypress="return isNumber(event);" />
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" title="ทะเบียนครุภัณฑ์"
+                                    [(ngModel)]="data.Old_Po_Number" />
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" [checked]="data.Is_Quarter === 1"
+                                    (change)="onChangeIsQuarter(data, $event)" />
+                            </td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <input class="form-check-input" type="checkbox" [checked]="data.Is_Purpose === 1"
+                                    (change)="onChangeIsPurpose(data, $event)" />
+                                    </div>
+                                    <div class="col-md-10">
+                                        <ng-select [items]="List_Mas_Month" [(ngModel)]="data.Month_Id" bindLabel="Month_Name" bindValue="Month_Id"
+                                            [placeholder]="'กรุณาเลือก'" (change)="choose_ddl_Mas_Month(data)">
+                                            <ng-template ng-option-tmp let-s3="item">
+                                                {{ s3.Month_Name}}
+                                            </ng-template>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <input type="text" class="form-control" title="เหตุผลความจำเป็น"
+                                    [(ngModel)]="data.Po_Remark" />
+                            </td>
+                            <td class="text-center">
+                                <div class="row">
+                                    <div class="col-lg-12" style="text-align: left;">
+                                        <h4>อัพโหลด</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12" style="text-align: right;">
+                                        <dropzone class="dropzone_sec"
+                                            (addedFile)="onDropzoneFileAdded1($event, $index)">
+                                        </dropzone>
+                                    </div>
+                                </div>
+
+                                <div class="file-preview-container">
+                                    <div *ngFor="let sub_item of getFilteredUploadFiles1(data.Request_Item_Id)">
+                                        <div class="file-preview-card">
+                                            <div class="file-content">
+                                                @if(isImageFile(sub_item.Name_Fake)){
+                                                <!-- แสดงรูปภาพถ้าเป็นไฟล์รูป -->
+                                                <img [src]="Preview_FileExam(sub_item.Request_Upload_Id)" alt="image"
+                                                    class="img-fluid rounded file-preview-image"
+                                                    (click)="openLightbox(sub_item)">
+                                                <!-- <span>{{sub_item.Name_Real}}</span> -->
+                                                <span>{{sub_item.Name_Real}}</span>
+                                                <div class="file-name">{{sub_item.Name_Fake}}</div>
+                                                } @else {
+                                                <!-- แสดงไอคอนหากไม่ใช่รูปภาพ -->
+                                                <div class="non-image-file"
+                                                    (click)="downloadFile(sub_item.Request_Upload_Id)">
+                                                    <img [src]="getFileIcon(sub_item.Name_Real)" alt="file"
+                                                        class="file-icon">
+                                                    <span>{{sub_item.Name_Real}}</span>
+                                                </div>
+                                                }
+                                            </div>
+                                            <div class="file-actions">
+                                                <button class="btn btn-sm btn-outline-primary"
+                                                    (click)="downloadFile(sub_item.Request_Upload_Id)">
+                                                    <i class="ri-download-line"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger"
+                                                    (click)="deleteFile(sub_item.Request_Upload_Id)">
+                                                    <i class="ri-delete-bin-line"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="text-center">
+                                <div class="row">
+                                    <div class="col-lg-12" style="text-align: left;">
+                                        <h4>อัพโหลด</h4>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-12" style="text-align: right;">
+                                        <dropzone class="dropzone_sec"
+                                            (addedFile)="onDropzoneFileAdded2($event, $index)">
+                                        </dropzone>
+                                    </div>
+                                </div>
+
+                                <div class="file-preview-container">
+                                    <div *ngFor="let sub_item of getFilteredUploadFiles2(data.Request_Item_Id)">
+                                        <div class="file-preview-card">
+                                            <div class="file-content">
+                                                @if(isImageFile(sub_item.Name_Fake)){
+                                                <!-- แสดงรูปภาพถ้าเป็นไฟล์รูป -->
+                                                <img [src]="Preview_FileExam(sub_item.Request_Upload_Id)" alt="image"
+                                                    class="img-fluid rounded file-preview-image"
+                                                    (click)="openLightbox(sub_item)">
+                                                <!-- <span>{{sub_item.Name_Real}}</span> -->
+                                                <span>{{sub_item.Name_Real}}</span>
+                                                <div class="file-name">{{sub_item.Name_Fake}}</div>
+                                                } @else {
+                                                <!-- แสดงไอคอนหากไม่ใช่รูปภาพ -->
+                                                <div class="non-image-file"
+                                                    (click)="downloadFile(sub_item.Request_Upload_Id)">
+                                                    <img [src]="getFileIcon(sub_item.Name_Real)" alt="file"
+                                                        class="file-icon">
+                                                    <span>{{sub_item.Name_Real}}</span>
+                                                </div>
+                                                }
+                                            </div>
+                                            <div class="file-actions">
+                                                <button class="btn btn-sm btn-outline-primary"
+                                                    (click)="downloadFile(sub_item.Request_Upload_Id)">
+                                                    <i class="ri-download-line"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger"
+                                                    (click)="deleteFile(sub_item.Request_Upload_Id)">
+                                                    <i class="ri-delete-bin-line"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-ghost-danger waves-effect waves-light"
+                                    (click)="btn_del_Detail_item($index)">
+                                    <i class="ri-delete-bin-6-fill" style="color: orangered;font-size: 20px;"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align:right">รวม :</td>
+                        <td style="text-align:center">
+                            {{calculatedTotal }}
+                            {{calculatedTotal_Front}}
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,322 @@
+<section id="Content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">รายการคำของบประมาณโครงการ</h4>
+                    <div class="flex-shrink-0">
+                        <label for=" searchInput" class="form-label">ค้นหา :</label>
+                    </div>
+                    <div class="search-box d-inline-block mb-2">
+                        <input type="text" class="form-control search" placeholder="Search..."
+                            [(ngModel)]="service.searchTerm" (input)="onFilter(service.searchTerm)">
+                        <i class="ri-search-line search-icon"></i>
+                    </div>
+                </div><!-- end card header -->
+                <div class="card-body">
+                    <div style="height:15px"></div>
+                    <div class="row align-items-center">
+                        <div class="col-12 col-sm-3 col-md-2 col-lg-1 text-sm-end">
+                            <label for="departmentSelect" class="form-label">หน่วยงาน:</label>
+                        </div>
+                        <div class="col-12 col-sm-9 col-md-6 col-lg-7">
+                            <ng-select [items]="List_Mas_Department" bindLabel="Department_Name"
+                                bindValue="Department_Id" [(ngModel)]="Department_Id" [placeholder]="'เลือกหน่วยงาน'"
+                                (change)="Choose_Data_By_Department()">
+                                <ng-template ng-option-tmp let-s1="item">
+                                    {{ s1.Department_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="col-12 col-md-4 text-end">
+                            <button type="button" class="btn btn-soft-primary waves-effect waves-light"
+                                data-bs-toggle="modal" data-bs-target="#exampleModalgrid"
+                                (click)="btn_add_fullModal(fullDataModal, 0, old_Budget_Request)">
+                                เพิ่มคำขอ
+                            </button>
+                        </div>
+                    </div>
+
+                    <div style="height:15px"></div>
+                    <!-- <div class="row">
+
+                        <div class="col-lg-12">
+                            
+                        </div>
+                    </div> -->
+                    <div class="table-responsive">
+                        <table class="table table-gridjs">
+                            <thead>
+                                <tr>
+                                    <th>ลำดับ</th>
+                                    <th class="sort" (click)="onSort('Plan_Name')">แผนงาน
+                                    </th>
+                                    <th class="sort" (click)="onSort('Product_Name')">
+                                        ผลผลิต
+                                    </th>
+                                    <th class="sort" (click)="onSort('Activity_Name')">
+                                        กิจกรรม</th>
+                                    <th class="sort" (click)="onSort('Budget_Type')" style="width: 5%;">
+                                        หมวดงบ
+                                    </th>
+                                    <th class="sort" (click)="onSort('Expense_Type')" style="width: 10%;">
+                                        หมวดค่าใช้จ่าย
+                                    </th>
+                                    <th class="sort" (click)="onSort('Expense_List')" style="width: 10%;">
+                                        รายการค่าใช้จ่าย
+                                    </th>
+                                    <th class="sort" style="width: 7%;">
+                                        งบประมาณ
+                                    </th>
+                                    <th style="text-align: center;">แก้ไข</th>
+                                    <th style="text-align: center;">ลบ</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @for(data of filteredTranList; track $index){
+                                <tr>
+                                    <td style="text-align: center;">{{ $index + 1 }}</td>
+                                    <td>
+                                        <!-- [term]="service.Plan_Name" ไม่ต้องใช้ ไว้ใช้กับ ค้นหา มันใช้ไม่ได้ -->
+                                        <ngb-highlight [result]="data.Plan_Name">{{data.Plan_Name}}</ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight
+                                            [result]=" data.Product_Name">{{data.Product_Name}}</ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight
+                                            [result]="data.Activity_Name">{{data.Activity_Name}}</ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight [result]="data.Budget_Type">{{data.Budget_Type}}</ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight
+                                            [result]="data.Expense_Type">{{data.Expense_Type}}</ngb-highlight>
+                                    </td>
+                                    <td>
+                                        <ngb-highlight
+                                            [result]="data.Expense_List">{{data.Expense_List}}</ngb-highlight>
+                                    </td>
+                                    <td>
+                                        {{MasterService.show_fix(data.Total || 0)}}
+                                    </td>
+                                    <td>
+
+
+                                        <button type="button" class="btn btn-ghost-warning waves-effect waves-light" data-bs-toggle="modal"
+                                            data-bs-target="#Modal1"
+                                            (click)="btn_add_fullModal(fullDataModal,data.Budget_Request.Request_Id, data.Budget_Request)">
+                                            <i class="ri-edit-2-fill" style="color: orange;font-size: 20px;"></i>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button type="button" class="btn btn-ghost-danger waves-effect waves-light"
+                                            (click)="btn_del_Budget_Req(data.Budget_Request.Request_Id)">
+                                            <i class="ri-delete-bin-6-fill" style="color: orangered;font-size: 20px;"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row justify-content-md-between align-items-md-center">
+                        <div class="col-sm-12 col-md-5">
+                            <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                                Showing
+                                {{service.startIndex}} to
+                                {{service.endIndex}} of {{service.totalRecords}}
+                                entries
+                            </div>
+                        </div>
+                        <!--Pagination-->
+                        <div class="col-sm-12 col-md-5">
+                            <div class="text-md-right float-md-end gridjs-pagination">
+                                <ngb-pagination [collectionSize]="(total$ | async)!" [(page)]="service.page"
+                                    [pageSize]="service.pageSize">
+                                </ngb-pagination>
+                            </div>
+                        </div>
+                        <!-- End Pagination -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<ng-template #fullDataModal let-modal>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="Modal1">เพิ่มคำของบดำเนินงาน</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                (click)="modal.dismiss('Close click')"></button>
+        </div>
+        <div class="modal-body">
+            <div class="card">
+                <!-- <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">ตัวชี้วัด</h4>
+                    <div class="flex-shrink-0">
+                        <div class="form-check form-switch form-switch-right form-switch-md">
+                        </div>
+                    </div>
+                </div> -->
+                <!-- end card header -->
+                <div class="card-body">
+                    <div style="height:15px"></div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <b>แผนงาน:</b>
+                        </div>
+                        <div class="col-md-3">
+                            <ng-select [items]="List_Mas_Plan" bindLabel="Plan_Name" bindValue="Plan_Id"
+                                [(ngModel)]="Budget_Request.Fk_Plan_Id" [placeholder]="'กรุณาเลือก'"
+                                (change)="choose_plan()" [disabled]="add === 'edit'">
+                                <ng-template ng-option-tmp let-s1="item">
+                                    {{ s1.Plan_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+
+                        <div class="col-md-1">
+                            <b>ผลผลิต:</b>
+                        </div>
+                        <div class="col-md-3">
+                            <ng-select [items]="List_Mas_Product" bindLabel="Product_Name" bindValue="Product_Id"
+                                [(ngModel)]="Budget_Request.Fk_Product_Id" [placeholder]="'กรุณาเลือก'"
+                                (change)="choose_product()" [disabled]="add === 'edit'">
+                                <ng-template ng-option-tmp let-s2="item">
+                                    {{ s2.Product_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="col-md-1">
+                            <b>กิจกรรม:</b>
+                        </div>
+                        <div class="col-md-3">
+                            <ng-select [items]="List_Mas_Activity" bindLabel="Activity_Name" bindValue="Activity_Id"
+                                [(ngModel)]="Budget_Request.Fk_Activity_Id" [placeholder]="'กรุณาเลือก'"
+                                (change)="choose_activity()" [disabled]="add === 'edit'">
+                                <ng-template ng-option-tmp let-s3="item">
+                                    {{ s3.Activity_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div style="height:15px"></div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <b>หมวดงบ:</b>
+                        </div>
+                        <div class="col-md-3">
+                            <p>{{Budget_Request.Budget_Type}}</p>
+                        </div>
+                        <div class="col-md-1">
+                            <b>หมวดค่าใช้จ่าย:</b>
+                        </div>
+                        <div class="col-md-3" *ngIf="Budget_Request.Request_Id === 0">
+                            <ng-select [items]="List_Mas_Expense_Type" bindLabel="Expense_Type_Name"
+                                bindValue="Expense_Type_Id" [(ngModel)]="Budget_Request.Fk_Expense_Type"
+                                [placeholder]="'กรุณาเลือก'" (change)="choose_Expense_Type()">
+                                <ng-template ng-option-tmp let-s4="item">
+                                    {{ s4.Expense_Type_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="col-md-3" *ngIf="Budget_Request.Request_Id !== 0">
+                            {{Budget_Request.Expense_Type}}
+                        </div>
+                        <div class="col-md-1">
+                            <b>รายการค่าใช้จ่าย:</b>
+                        </div>
+                        <div class="col-md-3" *ngIf="Budget_Request.Request_Id === 0">
+                            <ng-select [items]="List_Mas_Expense_List" bindLabel="Expense_Name" bindValue="Expense_Id"
+                                [(ngModel)]="Budget_Request.Fk_Expense_List" [placeholder]="'กรุณาเลือก'"
+                                (change)="choose_form()">
+                                <ng-template ng-option-tmp let-s4="item">
+                                    {{ s4.Expense_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="col-md-3" *ngIf="Budget_Request.Request_Id !== 0">
+                            {{Budget_Request.Expense_List}}
+                        </div>
+                    </div>
+                    <div style="height:15px"></div>
+                    <div class="row">
+                        <div class="col-md-1">
+                            <b>สอดรับโครงการ:</b>
+                        </div>
+                        <div class="col-md-3" *ngIf="Budget_Request.Request_Id === 0">
+                            <ng-select [items]="List_Mas_Expense_Type" bindLabel="Expense_Type_Name"
+                                bindValue="Expense_Type_Id" [(ngModel)]="Budget_Request.Fk_Expense_Type"
+                                [placeholder]="'กรุณาเลือก'" (change)="choose_Expense_Type()">
+                                <ng-template ng-option-tmp let-s4="item">
+                                    {{ s4.Expense_Type_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                        <div class="col-md-1">
+                            <b>ชื่อโครงการ:</b>
+                        </div>
+                        <div class="col-md-3" *ngIf="Budget_Request.Request_Id === 0">
+                            <ng-select [items]="List_Mas_Expense_List" bindLabel="Expense_Name" bindValue="Expense_Id"
+                                [(ngModel)]="Budget_Request.Fk_Expense_List" [placeholder]="'กรุณาเลือก'"
+                                (change)="choose_form()">
+                                <ng-template ng-option-tmp let-s4="item">
+                                    {{ s4.Expense_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+
+                    <div style="height:15px"></div>
+                    <div class="row" *ngIf="(Budget_Request.Total || 0) != 0">
+                        <div class="col-1">
+                            <h3>รวมทั้งสิ้น:</h3>
+                        </div>
+                        <div class="col-4">
+                            <h3 style="color:red">{{calculatedTotal_Request}}</h3>
+                        </div>
+                    </div>
+                    <br />
+                    <hr />
+                    <br />
+                    <!--ค่าใช้สอย-->
+                    <!------------->
+                    <!-- SubPage โครงการพัฒนา -->
+                    <div *ngIf="formPartial == 'Project_Form'">
+                        <Project_Form [Form_Name]="Form_Name"
+                            [List_Budget_Request_Detail_Item]="List_Budget_Request_Detail_Item"
+                            (calculatedTotalChange)="onCalculatedTotalChange($event)"
+                            [calculatedTotal_Front]="calculatedTotal_Front"></Project_Form>
+                    </div>
+                    
+                    <!-- [Filtered_Upload_Files]="getFilteredUploadFiles(Budget_Request_Detail_Item.Request_Item_Id)" -->
+
+
+                    <div *ngIf="formPartial == 'Other_Form'">
+                        <!-- <other></other> -->
+                    </div>
+                    <!-- <div #dynamicContainer></div> -->
+                    <!-- <Salary_Form></Salary_Form> --> <!--ดึงหน้ามาใช้ -->
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="btn_save()">บันทึก</button>
+            <button type="button" class="btn btn-danger"><a href="javascript:void(0);" data-bs-dismiss="modal"
+                    id="cdFullmodal" (click)="modal.close('Close click')"><i
+                        class="ri-close-line me-1 align-middle"></i>
+                    Close</a></button>
+            <!-- <a href="javascript:void(0);"
+                    class="btn btn-link link-success fw-medium" data-bs-dismiss="modal" id="cdFullmodal"
+                    (click)="modal.close('Close click')"><i class="ri-close-line me-1 align-middle"></i>
+                    Close</a> -->
+
+        </div>
+    </div><!-- /.modal-content -->
+</ng-template><!-- /.modal-dialog -->

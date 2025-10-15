@@ -1,0 +1,99 @@
+<section class="card card-content">
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-md-12 text-left">
+            <span style="font-size:14pt;font-weight:bold">
+                {{Form_Name}}
+            </span>
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-soft-primary waves-effect waves-light"
+                (click)="add_form_detail()">เพิ่มข้อมูล</button>
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table">
+                <table class="table table-gridjs">
+                    <thead>
+                        <tr class="tr-center">
+                            <th style="width: 5%;">ลำดับ</th>
+                            <th style="width: 15%;">
+                                ตำแหน่ง
+                            </th>
+                            <th style="width: 15%;">
+                                ค่าตอบแทน
+                            </th>
+                            <th style="width: 10%;">
+                                จำนวนคน
+                            </th>
+                            <th style="width: 5%;">
+                                จำนวนเวร/ปี
+                            </th>
+                            <th style="width: 5%;">
+                                รวม
+                            </th>
+                            <th style="width: 5%;">ลบ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(data of List_Budget_Request_Detail_Item; track $index){
+                        <tr class="tr-center">
+                            <td style="text-align: center;">
+                                {{ $index + 1 }}
+                            </td>
+                            <td>
+                                <ng-select [items]="List_Mas_Expense_Cost_Rate" bindLabel="Cost_Name"
+                                    bindValue="Cost_Id" [(ngModel)]="data.Fk_Cost_Id" [placeholder]="'กรุณาเลือก'"
+                                    (change)="choose_ddl_cost_rate(data)">
+                                    <ng-template ng-option-tmp let-s1="item">
+                                        {{ s1.Cost_Name}}
+                                    </ng-template>
+                                </ng-select>
+                            </td>
+                            <td>
+                                <input class="form-control" type="number" title="ค่าตอบแทน Getค่า" disabled
+                                     [(ngModel)]="data.Cost_Amount" />
+                            </td>
+
+                            <td>
+                                <input class="form-control" type="number" title="จำนวนคน" [(ngModel)]="data.People" onkeypress="return isNumber(event);"
+                                    (keyup)="cal_qty_item(data)" />
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" [(ngModel)]="data.Qty_Night_Shift"
+                                    title="จำนวนเวร/ปี" onkeypress="return isNumber(event);"  (keyup)="cal_qty_item(data)" />
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" [(ngModel)]="data.Total"
+                                    title="ค่าตอบแทน x จำนวนคน x จำนวนเวร/ปี" disabled />
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-ghost-danger waves-effect waves-light" (click)="btn_del_Detail_item($index)">
+                                    <i class="ri-delete-bin-6-fill" style="color: orangered;font-size: 20px;"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align:right">รวม :</td>
+                        <td style="text-align:center">
+                            {{calculatedTotal }}
+                            {{calculatedTotal_Front}}
+                        </td>
+                        <td></td>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

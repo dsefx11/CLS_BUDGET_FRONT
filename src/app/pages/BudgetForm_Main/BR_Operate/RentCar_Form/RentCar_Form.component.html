@@ -1,0 +1,190 @@
+<section class="card card-content">
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-md-12 text-left">
+            <span style="font-size:14pt;font-weight:bold">
+                {{Form_Name}}
+            </span>
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-soft-primary waves-effect waves-light"
+                (click)="add_form_detail()">เพิ่มข้อมูล</button>
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-12" style="overflow-x:scroll;width:100%">
+            <div class="table">
+                <table class="table table-gridjs" style="width:120%">
+                    <thead>
+                        <tr class="tr-center">
+                            <th style="width: 5%;">ลำดับ</th>
+                            <th style="width: 15%;">
+                                ผูกผัน
+                            </th>
+                            <th style="width: 5%;">
+                                ทดแทนของเดิม
+                            </th>
+                            <th style="width: 5%;">
+                                ขอใหม่
+                            </th>
+                            <th style="width: 20%;">
+                                ประเภทรถ
+                            </th>
+                            <th style="width: 5%;">
+                                จำนวน CC/กิโลวัตต์
+                            </th>
+                            <th style="width: 5%;">
+                                ปีงบประมาณเริ่ม/สิ้นสุด
+                            </th>
+                            <th style="width: 5%;">
+                                จำนวนคัน
+                            </th>
+                            <th style="width: 10%;">
+                                ค่าเช่า/เดือน
+                            </th>
+                            <th style="width: 5%;">
+                                จำนวนเดือน
+                            </th>
+                            <th style="width: 10%;">
+                                รวม
+                            </th>
+                            <th style="width: 20%;">แนบไฟล์</th>
+                            <th style="width: 5%;">ลบ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- @for(data of List_Budget_Request_Detail_Item; track $index){ -->
+                        <tr class="tr-center" *ngFor="let data of List_Budget_Request_Detail_Item; let rowIndex = index">
+                            <td style="text-align: center;">
+                                {{ rowIndex + 1 }}
+                            </td>
+                            <td>
+                                <ng-select [items]="List_Mas_Po_Type" bindLabel="Po_Type_Name" bindValue="Po_Type_Id"
+                                    [(ngModel)]="data.Po_Type_Id" [placeholder]="'กรุณาเลือก'"
+                                    (change)="choose_ddl_Mas_Po_Type(data)">
+                                    <ng-template ng-option-tmp let-s1="item">
+                                        {{ s1.Po_Type_Name}}
+                                    </ng-template>
+                                </ng-select>
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" [checked]="data.Car_Type_Used_Id === 1"
+                                    (change)="onChangeCheckBox_Car_Type_Used(data.Car_Type_Used_Id, 1,data)" />
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" [checked]="data.Car_Type_Used_Id === 2"
+                                    (change)="onChangeCheckBox_Car_Type_Used(data.Car_Type_Used_Id, 2,data)" />
+                            </td>
+                            <td>
+                                <ng-select [items]="List_Mas_Expense_Material_List" bindLabel="Material_Name"
+                                    bindValue="Material_Id" [(ngModel)]="data.Material_Id" [placeholder]="'กรุณาเลือก'"
+                                    (change)="choose_ddl_Expense_Material(data)">
+                                    <ng-template ng-option-tmp let-s2="item">
+                                        {{ s2.Material_Name}}
+                                    </ng-template>
+                                </ng-select>
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" title="จำนวน CC/กิโลวัตต์"
+                                    [(ngModel)]="data.Car_CC" onkeypress="return isNumber(event);" />
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" title="ปีงบประมาณเริ่ม/สิ้นสุด"
+                                    [(ngModel)]="data.BudgetYear_StartEnd" onkeypress="return isNumber(event);" />
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" title="จำนวนคัน" [(ngModel)]="data.Qty_Car"
+                                    onkeypress="return isNumber(event);" (keyup)="cal_qty_item(data)" />
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" title="ค่าเช่า/เดือน"
+                                    [(ngModel)]="data.Rent_Per_Month" step="0.01" (keyup)="cal_qty_item(data)" />
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" title="จำนวนเดือน"
+                                    [(ngModel)]="data.Qty_Month" onkeypress="return isNumber(event);"
+                                    (keyup)="cal_qty_item(data)" />
+                            </td>
+                            <td>
+                                <input type="number" class="form-control" title="จำนวนคัน x ค่าเช่า/เดือน x จำนวนเดือน"
+                                    [(ngModel)]="data.Total" disabled />
+                            </td>
+<td class="text-center">
+    <div class="row">
+        <div class="col-lg-12" style="text-align: right;">
+            <dropzone class="dropzone_sec"
+                (addedFile)="onDropzoneFileAdded1($event, rowIndex)">
+            </dropzone>
+        </div>
+    </div>
+
+    <div class="file-preview-container mt-2">
+        <div *ngFor="let file of data.uploadedFiles1; let i = index" class="file-preview-card position-relative mb-2"> 
+         <!-- <div *ngFor="let file of (data.uploadedFiles1?.length ? data.uploadedFiles1 : getFilteredUploadFiles1(data.Request_Item_Id)); let i = index" class="file-preview-card position-relative mb-2"> -->
+            <div class="d-flex align-items-center p-3" style="background-color: #f8f9fa; border-radius: 4px;">
+                <div class="file-icon me-3">
+                    <img *ngIf="isImageFile(file)" 
+                        [src]="file.dataURL || file.preview || file.url" 
+                        alt="preview"
+                        class="rounded"
+                        style="height:40px; width:40px; object-fit: cover;">
+                    <i *ngIf="!isImageFile(file)" 
+                        class="ri-file-2-line"
+                        style="font-size:24px; color:#6c757d;"></i>
+                </div>
+  <div class="file-info flex-grow-1">
+    <div class="fw-medium">{{ file.name || file.Name_Real || file.NAME_FAKE }}</div>
+    <!-- แสดงขนาดไฟล์เฉพาะตอนอัปโหลดใหม่ -->
+    <!-- <ng-container *ngIf="data.uploadedFiles1?.length && data.uploadedFiles1.includes(file) && !getFilteredUploadFiles1(data.Request_Item_Id)?.length">
+        <small class="text-muted">
+            <ng-container *ngIf="(file.size || file.Size || 0) < 1024 * 1024; else showMB">
+                {{ (file.size || file.Size || 0) / 1024 | number:'1.0-0' }} KB
+            </ng-container>
+            <ng-template #showMB>
+                {{ (file.size || file.Size || 0) / (1024 * 1024) | number:'1.0-1' }} MB
+            </ng-template>
+        </small>
+    </ng-container> -->
+</div>
+ <button type="button" class="btn btn-ghost-danger waves-effect waves-light" (click)="removeDropzoneFile(file, data, rowIndex)">
+    <i class="ri-delete-bin-6-fill" style="color: orangered;font-size: 20px;"></i></button>
+            </div>
+        </div>
+    </div>
+</td>
+                            <td>
+                                <button type="button" class="btn btn-ghost-danger waves-effect waves-light"
+                                    (click)="btn_del_Detail_item(rowIndex)">
+                                    <i class="ri-delete-bin-6-fill" style="color: orangered;font-size: 20px;"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <!-- } -->
+                    </tbody>
+                    <tfoot>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align:right">รวม :</td>
+                        <td style="text-align:center">
+                            {{calculatedTotal }}
+                            {{calculatedTotal_Front}}
+                        </td>
+                        <td></td>
+                        <td></td>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

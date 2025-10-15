@@ -1,0 +1,115 @@
+<section class="card card-content">
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-md-12 text-left">
+            <span style="font-size:14pt;font-weight:bold">
+                {{Form_Name}}
+            </span>
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-md-12 text-left">
+            <button *ngIf="showAddButton == true" type="button" class="btn btn-soft-primary waves-effect waves-light"
+                (click)="add_form_detail()">เพิ่มข้อมูล</button>
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table">
+                <table class="table table-gridjs">
+                    <thead>
+                        <tr>
+                            <th style="width: 5%;">ลำดับ</th>
+                            <th>
+                                ประเภท OT
+                            </th>
+                            <th>
+                                จำนวนคน
+                            </th>
+                            <th>
+                                จำนวนวัน
+                            </th>
+                            <th>
+                                จำนวน ชม./วัน
+                            </th>
+                            <th>
+                                ค่าตอบแทน/ชม.
+                            </th>
+                            <th>
+                                รวม
+                            </th>
+                            <th style="width: 5%;">ลบ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(data of List_Budget_Request_Detail_Item; track $index){
+                        <tr>
+                            <td style="text-align: center;">
+                                {{ $index + 1 }}
+                            </td>
+                            <td>
+                                <ng-select [items]="List_Mas_Expense_Cost_Rate" bindLabel="Cost_Name"
+                                    bindValue="Cost_Id" [(ngModel)]="data.Fk_Cost_Id" [placeholder]="'กรุณาเลือก'"
+                                    (change)="choose_ddl_cost_rate($index,data)">
+                                    <ng-template ng-option-tmp let-s1="item">
+                                        {{ s1.Cost_Name}}
+                                    </ng-template>
+                                </ng-select>
+                            </td>
+                            <td>
+                                <input class="form-control" type="text" title="จำนวนคน" [(ngModel)]="data.People"
+                                    (keyup)="Cal_Pay_Hour($index)" />
+                            </td>
+                            <td>
+                                <input class="form-control" type="number" title="จำนวนวัน" [(ngModel)]="data.Qty_Day"
+                                    (keyup)="Cal_Pay_Hour($index)" />
+                            </td>
+                            <td>
+                                <div *ngIf="data.Fk_Cost_Id == 34">
+                                    <input class="form-control" type="number" title="จำนวน ชม./วัน"
+                                        [(ngModel)]="data.Qty_Hour"
+                                        (keyup)="Chk_Hour($index,data.Fk_Cost_Id,data.Qty_Hour,data)" />
+                                </div>
+                                <div *ngIf="data.Fk_Cost_Id == 35">
+                                    <input class="form-control" type="number" title="จำนวน ชม./วัน"
+                                        [(ngModel)]="data.Qty_Hour"
+                                        (keyup)="Chk_Hour($index,data.Fk_Cost_Id,data.Qty_Hour,data)" />
+                                </div>
+                            </td>
+                            <td>
+                                <input class="form-control" type="text" title="ค่าตอบแทน/ชม." disabled
+                                    placeholder="วันทำการ 50 วันหยุด 60" [(ngModel)]="data.Cost_Amount" />
+                            </td>
+                            <td>
+                                <input class="form-control" type="text" title="รวม" disabled
+                                    placeholder="จำนวนคน x จำนวนวัน x จำนวน ชม./วัน x ค่าตอบแทน/ชม."
+                                    [(ngModel)]="data.Total" />
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-ghost-danger waves-effect waves-light" (click)="btn_del_Detail_item($index)">
+                                    <i class="ri-delete-bin-6-fill" style="color: orangered;font-size: 20px;"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align:right">รวม :</td>
+                        <td style="text-align:center">
+                            {{calculatedTotal }}
+                            {{calculatedTotal_Front}}
+                        </td>
+                        <td></td>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

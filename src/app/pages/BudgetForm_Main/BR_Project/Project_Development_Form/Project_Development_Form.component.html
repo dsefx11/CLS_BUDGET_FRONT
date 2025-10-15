@@ -1,0 +1,1642 @@
+<section class="card card-content">
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-12 text-left">
+            <span style="font-size:14pt;font-weight:bold">
+                {{Form_Name}}
+            </span>
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="col-lg-6 text-left">
+        <span style="font-size:14pt;font-weight:bold">ส่วนที่ 1 ข้อมูลทั่วไป</span>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-1 text-right">
+            ชื่อโครงการ :
+        </div>
+        <div class="col-lg-4 text-left">
+            <input type="text" class="form-control" />
+        </div>
+        <div class="col-lg-1 text-right">
+            ประเภทโครงการ :
+        </div>
+        <div class="col-lg-4 text-left">
+            <div class="checkbox-container">
+                <label><input type="checkbox" class="form-check-input"> ใหม่</label>
+                <label><input type="checkbox" class="form-check-input"> ต่อเนื่อง</label>
+            </div>
+        </div>
+
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-md-1 text-right">
+            ลักษณะโครงการ :
+        </div>
+        <div class="col-md-4 text-left">
+            <select chosen options="List_Mas-Project_Type" [(ngModel)]="Budget_Request_Detail.Detail_1">
+                <option value="1">โครงการวิจัย</option>
+                <option value="2">โครงการพัฒนา</option>
+                <option value="3">โครงการอบรมสัมนา</option>
+                <option value="3">โครงการประชุม</option>
+                <option value="3">โครงการบูรณาการ</option>
+            </select>
+        </div>
+        <div class="col-md-2 text-right">
+            สอดรับโครงการ :
+        </div>
+        <div class="col-md-4 text-left">
+            <select chosen options="List_Department" [(ngModel)]="Budget_Request_Detail.Detail_2">
+                <option value="1">โครงการขาวคาดแดง</option>
+                <option value="2">โครงการยุทธศาสตร์ชาติ</option>
+                <option value="4">โครงการขับเคลื่อนยุทธศาสตร์</option>
+                <option value="5">โครงการอื่นๆ</option>
+            </select>
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-1 text-right">
+            วิธีการวัดโครงการ :
+        </div>
+        <div class="col-lg-1 text-right">
+            ดำเนินการเอง
+        </div>
+        <div class="col-lg-1 text-left">
+            <input type="text" name="name" value="" class="form-control" placeholder="%" />
+        </div>
+        <div class="col-lg-1 text-right">
+            จัดจ้าง
+        </div>
+        <div class="col-lg-1 text-left">
+            <input type="text" name="name" value="" class="form-control" placeholder="%" />
+        </div>
+        <div class="col-lg-2 text-right">
+            วงเงินงบประมาณ :
+        </div>
+        <div class="col-lg-2 text-left">
+            <span style="color:red">Sum ทั้งโครงการ</span>
+        </div>
+        <div class="col-lg-1 text-left">บาท</div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- Nav tabs -->
+            <ul ngbNav #Border="ngbNav" [activeId]="1" class="nav nav-tabs nav-border-top nav-border-top-primary mb-3">
+                <li [ngbNavItem]="1">
+                    <a ngbNavLink>
+                        ส่วนที่ 2
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div class="d-flex">
+                            <div class="flex-grow-1 ms-2">
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <span
+                                            style="font-size:14pt;font-weight:bold">ความเชื่อมโยงกับแผนในระดับต่างๆ</span>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div style="height:15px"></div>
+                                    <div class="col-md-6 text-left">
+                                        <span style="font-size:14pt;font-weight:bold">แผนระดับที่ 1</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div style="height:15px"></div>
+                                    <div class="col-md-6 text-left">
+                                        <span style="color:red">*</span><span
+                                            style="font-size:14pt;font-weight:bold">1.1
+                                            ยุทธศาสตร์ชาติที่เกี่ยวข้องโดนตรง (Z)</span>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-2 text-right">
+                                        ยุทธศาสตร์ชาติด้าน :
+                                    </div>
+                                    <div class="col-md-2 text-left">
+                                        <input class="form-control" type="text" title="ยุทธศาสตร์ชาติด้าน"
+                                            ng-model="FULL_MODEL.TABLE.COLUNM1" />
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-2 text-right">
+                                        ประเด็น :
+                                    </div>
+                                    <div class="col-md-2 text-left">
+                                        <input class="form-control" type="text" title="ยุทธศาสตร์ชาติด้าน"
+                                            ng-model="FULL_MODEL.TABLE.COLUNM2" />
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-2 text-right">
+                                        ประเด็นย่อย :
+                                    </div>
+                                    <div class="col-md-2 text-left">
+                                        <input class="form-control" type="text" title="ประเด็นย่อย"
+                                            ng-model="FULL_MODEL.TABLE.COLUNM3" />
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-2 text-right">
+                                        เป้าหมาย
+                                    </div>
+                                    <div class="col-md-2 text-left">
+                                        <input class="form-control" type="text" title="เป้าหมาย"
+                                            ng-model="FULL_MODEL.TABLE.COLUNM4" />
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <span style="font-size:14pt;font-weight:bold">1.2
+                                            ยุทธศาสตร์ชาติที่เกี่ยวข้องในระดับรอง (Z)</span>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-12 text-left">
+                                        <input id="btn_add" class="btn btn-outline-primary" style="width:110px"
+                                            value="เพิ่มรายการ" ng-click="" />
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <span style="font-size:14pt;font-weight:bold">แผนระดับที่ 2</span>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <span style="font-size:14pt;font-weight:bold">2.1
+                                            ความสอดคล้องกับแผนแม่บทภายใต้ยุทธศาสตร์ชาติ (Y)</span>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <input id="btn_add" class="btn btn-outline-primary" style="width:110px"
+                                            value="เพิ่มรายการ" ng-click="" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <!-- get-list-Form Oject Array -->
+                                    <!-- <div ng-repeat="List_Form_D2"></div> -->
+                                    <div style="height:15px"></div>
+                                    <div class="group-container">
+                                        <div class="row">
+                                            <div class="col-md-1 text-center padding-row" style="width:60px">1</div>
+                                            <div class="col-md-1 text-center padding-row"
+                                                style="padding-block-end: 10px; background-color: lightblue">ประเด็น
+                                            </div>
+                                            <div class="col-md-9"
+                                                style="padding:20px;padding-block-end:10px;background-color:lightblue">
+                                                <input class="form-control" type="text" title="ประเด็น"
+                                                    ng-model="item_2.Colunm1" />
+                                            </div>
+                                            <div class="col-md-1 text-center padding-row">
+                                                <button type="button" class="btn btn-outline-danger-ncb" title="ลบ"
+                                                    ng-click="btn_del_Detail_item($index)">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group-container" style="padding:20px">
+                                        <div class="row">
+                                            <div class="col-md-1 text-center padding-row" style="width:60px"></div>
+                                            <div class="col-md-1 text-right">
+                                                เป้าหมายระดับประเด็น (Y2)
+                                            </div>
+                                            <div class="col-md-10 text-left">
+                                                <input class="form-control" type="text"
+                                                    title="เป้าหมายระดับประเด็น (Y2)" ng-model="item_2.Colunm2" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="group-container" style="padding:20px">
+                                        <div class="row">
+                                            <div class="col-md-1 text-center padding-row" style="width:60px"></div>
+                                            <div class="col-md-1 text-right">
+                                                ความสอดคล้องของโครงการกับเป้าหมายของแผนแม่บท (โปรดอธิบาย)
+                                            </div>
+                                            <div class="col-md-10 text-left">
+                                                <textarea class="form-control" rows="3"
+                                                    title="ความสอดคล้องของโครงการกับเป้าหมายของแผนแม่บท (โปรดอธิบาย)"
+                                                    ng-model="item_2.Colunm3" style="height:120px"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="group-container" style="padding:20px">
+                                        <div class="row">
+                                            <div class="col-md-1 text-center padding-row" style="width:60px"></div>
+                                            <div class="col-md-1 text-right">
+                                                แผนย่อยของแผนแม่บทฯ
+                                            </div>
+                                            <div class="col-md-10 text-left">
+                                                <input class="form-control" type="text" title="แผนย่อยของแผนแม่บทฯ"
+                                                    ng-model="item_2.Colunm4" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="group-container" style="padding:20px">
+                                        <div class="row">
+                                            <div class="col-md-1 text-center padding-row" style="width:60px"></div>
+                                            <div class="col-md-1 text-right">
+                                                เป้าหมายแผนแม่บทย่อย (Y1)
+                                            </div>
+                                            <div class="col-md-10 text-left">
+                                                <input class="form-control" type="text"
+                                                    title="เป้าหมายแผนแม่บทย่อย (Y1)" ng-model="item_2.Colunm5" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="group-container" style="padding:20px">
+                                        <div class="row">
+                                            <div class="col-md-1 text-center padding-row" style="width:60px"></div>
+                                            <div class="col-md-1 text-right">
+                                                ความสอดคล้องของโครงการกับเป้าหมายของแผนย่อย (โปรดอธิบาย)
+                                            </div>
+                                            <div class="col-md-10 text-left">
+                                                <textarea class="form-control" rows="3"
+                                                    title="ความสอดคล้องของโครงการกับเป้าหมายของแผนย่อย (โปรดอธิบาย)"
+                                                    ng-model="item_2.Colunm6" style="height:120px"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="group-container" style="padding:20px">
+                                        <div class="row">
+                                            <div class="col-md-1 text-center padding-row" style="width:60px"></div>
+                                            <div class="col-md-1 text-right">
+                                                แนวทางการพัฒนาภายใต้แผนย่อย
+                                            </div>
+                                            <div class="col-md-10 text-left">
+                                                <input class="form-control" type="text"
+                                                    title="แนวทางการพัฒนาภายใต้แผนย่อย" ng-model="item_2.Colunm7" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1 text-center padding-row" style="width:60px"></div>
+                                        <div class="col-md-11" style="background-color:lightblue;height:30px">
+                                            สอดคล้องห่วงโซ่คุณค่า (Value Chains) ของเป้าหมายแผนย่อย
+                                        </div>
+                                    </div>
+                                    <div class="group-container" style="padding:20px">
+                                        <div class="row">
+                                            <div class="col-md-1 text-center padding-row" style="width:60px"></div>
+                                            <div class="col-md-1 text-right">
+                                                หลัก
+                                            </div>
+                                            <div class="col-md-5 text-left">
+                                                <select chosen options="" ng-model="ddl_1">
+                                                    <option>ตำแหน่ง 1</option>
+                                                    <option>ตำแหน่ง 2</option>
+                                                    <option>ตำแหน่ง 3</option>
+                                                    <!-- <option ng-repeat="item_d1 in z" ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                </select>
+                                            </div>
+                                            <div class="col-md-5 text-left">
+                                                <select chosen options="" ng-model="ddl_2">
+                                                    <option>ตำแหน่ง 1</option>
+                                                    <option>ตำแหน่ง 2</option>
+                                                    <option>ตำแหน่ง 3</option>
+                                                    <!-- <option ng-repeat="item_d1 in " ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group-container" style="padding:20px">
+                                        <div class="row">
+
+                                            <div class="col-md-2 text-right">
+                                                ส่วนสนับสนุน (ถ้ามี)
+                                            </div>
+                                            <div class="col-md-5 text-left">
+                                                <select chosen options="" ng-model="ddl_1">
+                                                    <!-- <option ng-repeat="item_d1 in " ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                    <option>ตำแหน่ง 1</option>
+                                                    <option>ตำแหน่ง 2</option>
+                                                    <option>ตำแหน่ง 3</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-5 text-left">
+                                                <select chosen options="" ng-model="ddl_2">
+                                                    <!-- <option ng-repeat="item_d1 in " ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                    <option>ตำแหน่ง 1</option>
+                                                    <option>ตำแหน่ง 2</option>
+                                                    <option>ตำแหน่ง 3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-1 text-center padding-row" style="width:60px"></div>
+                                        <div class="col-md-11" style="background-color:lightblue;height:30px">
+                                            สอดคล้องกับเป้าหมาย SDGs
+                                        </div>
+                                    </div>
+                                    <div class="group-container" style="padding:20px">
+                                        <div class="row">
+                                            <div class="col-md-1 text-center padding-row" style="width:60px"></div>
+                                            <div class="col-md-1 text-right">
+                                                เป้าหมายหลัก SDGs (Gloals)
+                                            </div>
+                                            <div class="col-md-10 text-left">
+                                                <textarea class="form-control" rows="3"
+                                                    title="เป้าหมายหลัก SDGs (Gloals)" ng-model="item_2.Colunm6"
+                                                    style="height:120px"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group-container" style="padding:20px">
+                                        <div class="row">
+                                            <div class="col-md-1 text-center padding-row" style="width:60px"></div>
+                                            <div class="col-md-1 text-right">
+                                                เป้าหมายหลัก SDGs (Targets)
+                                            </div>
+                                            <div class="col-md-10 text-left">
+                                                <textarea class="form-control" rows="3"
+                                                    title="เป้าหมายหลัก SDGs (Targets)" ng-model="item_2.Colunm6"
+                                                    style="height:120px"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <span style="font-size:14pt;font-weight:bold">2.2
+                                            แผนปฎิรูปประเทศด้านที่เกี่ยวข้องโดยตรง</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="group-container" style="padding:20px">
+                                        <div class="row">
+                                            <div class="col-md-1 text-right">
+                                                แผนปฎิรูปด้าน
+                                            </div>
+                                            <div class="col-md-11 text-left">
+                                                <select chosen options="" ng-model="ddl_3">
+                                                    <!-- <option ng-repeat="item_d1 in " ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                    <option value="">แผนปฎิรูปด้าน 1
+                                                    <option>
+                                                    <option value="">แผนปฎิรูปด้าน 2
+                                                    <option>
+                                                    <option value="">แผนปฎิรูปด้าน 3
+                                                    <option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group-container" style="padding:20px">
+                                        <div class="row">
+                                            <div class="col-md-1 text-right">
+                                                เป้าหมาย
+                                            </div>
+                                            <div class="col-md-11 text-left">
+                                                <input class="form-control" type="text" title="เป้าหมาย"
+                                                    ng-model="item_2.Colunm7" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group-container" style="padding:20px">
+                                        <div class="row">
+                                            <div class="col-md-1 text-right">
+                                                ประเด็นปฎิรูป
+                                            </div>
+                                            <div class="col-md-11 text-left">
+                                                <input class="form-control" type="text" title="เป้าหมาย"
+                                                    ng-model="item_2.Colunm7" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group-container" style="padding:20px">
+                                        <div class="row">
+                                            <div class="col-md-1 text-right">
+                                                กิจกกรม/กิจกรรมย่อย
+                                            </div>
+                                            <div class="col-md-11 text-left">
+                                                <input class="form-control" type="text" title="เป้าหมาย"
+                                                    ng-model="item_2.Colunm7" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <span style="font-size:14pt;font-weight:bold">2.3
+                                            แผนปฎิรูปประเทศด้านที่เกี่ยวข้องในระดับรอง</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="group-container" style="padding:20px">
+                                        <div class="row">
+                                            <div class="col-md-1 text-right">
+                                                แผนปฏิรูปด้าน
+                                            </div>
+                                            <div class="col-md-11 text-left">
+                                                <select chosen options="" ng-model="ddl_4">
+                                                    <!-- <option ng-repeat="item_d1 in " ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                    <option value="">แผน 1</option>
+                                                    <option value="">แผน 2</option>
+                                                    <option value="">แผน 3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group-container" style="padding:20px">
+                                        <div class="row">
+                                            <div class="col-md-1 text-right">
+                                                เป้าหมาย
+                                            </div>
+                                            <div class="col-md-11 text-left">
+                                                <input class="form-control" type="text" title="เป้าหมาย"
+                                                    ng-model="item_2.Colunm7" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group-container" style="padding:20px">
+                                        <div class="row">
+                                            <div class="col-md-1 text-right">
+                                                ประเด็นปฎิรูป
+                                            </div>
+                                            <div class="col-md-11 text-left">
+                                                <input class="form-control" type="text" title="เป้าหมาย"
+                                                    ng-model="item_2.Colunm7" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group-container" style="padding:20px">
+                                        <div class="row">
+                                            <div class="col-md-1 text-right">
+                                                กิจกรรม/กิจกรรมย่อย
+                                            </div>
+                                            <div class="col-md-11 text-left">
+                                                <input class="form-control" type="text" title="เป้าหมาย"
+                                                    ng-model="item_2.Colunm7" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <span style="font-size:14pt;font-weight:bold">2.4
+                                            ความสอดคล้องกับร่างแผนพัฒนาเศรษฐกิจและสังคมแห่งชาติ (ฉบับที่ 13)</span>
+                                    </div>
+                                </div>
+                                <div class="group-container" style="padding:20px">
+                                    <div class="row">
+                                        <div class="col-md-1 text-right">
+                                            หมุดหมายที่
+                                        </div>
+                                        <div class="col-md-11 text-left">
+                                            <select chosen options="" ng-model="ddl_4">
+                                                <!-- <option ng-repeat="item_d1 in " ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                <option value="">หมุดหมาย 1</option>
+                                                <option value="">หมุดหมาย 2</option>
+                                                <option value="">หมุดหมาย 3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="group-container" style="padding:20px">
+                                    <div class="row">
+                                        <div class="col-md-1 text-right">
+                                            เป้าหมายที่
+                                        </div>
+                                        <div class="col-md-11 text-left">
+                                            <input class="form-control" type="text" title="เป้าหมายที่"
+                                                ng-model="item_2.Colunm7" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="group-container" style="padding:20px">
+                                    <div class="row">
+                                        <div class="col-md-1 text-right">
+                                            ตัวชี้วัด
+                                        </div>
+                                        <div class="col-md-11 text-left">
+                                            <textarea class="form-control" rows="3" title="ตัวชี้วัด"
+                                                ng-model="item_2.Colunm6" style="height:120px"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="group-container" style="padding:20px">
+                                    <div class="row">
+                                        <div class="col-md-1 text-right">
+                                            กลยุทธ์การพัฒนาที่
+                                        </div>
+                                        <div class="col-md-11 text-left">
+                                            <input class="form-control" type="text" title="เป้าหมายที่"
+                                                ng-model="item_2.Colunm7" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="group-container" style="padding:20px">
+                                    <div class="row">
+                                        <div class="col-md-1 text-right">
+                                            กลยุทธ์ย่อยที่
+                                        </div>
+                                        <div class="col-md-11 text-left">
+                                            <input class="form-control" type="text" title="เป้าหมายที่"
+                                                ng-model="item_2.Colunm7" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <span style="font-size:14pt;font-weight:bold">2.5
+                                            ความสอดคล้องกับแผนความมั่นคงชาติ</span>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <input id="btn_add" class="btn btn-outline-primary" style="width:110px"
+                                            value="เพิ่มรายการ" ng-click="" />
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <!-- get-list-Form Oject Array -->
+                                    <!-- <div ng-repeat="List_Form_D2"></div> -->
+                                    <div class="group-container">
+                                        <div class="row">
+                                            <div class="col-md-1 text-center padding-row"
+                                                style="padding-block-end: 10px;">ประเด็นที่สอดคล่้อง ($index)</div>
+                                            <div class="col-md-10"
+                                                style="padding:20px;padding-block-end:10px;background-color:lightblue">
+                                                <input class="form-control" type="text" title="ประเด็น"
+                                                    ng-model="item_2.Colunm1" />
+                                            </div>
+                                            <div class="col-md-1 text-center padding-row">
+                                                <button type="button" class="btn btn-outline-danger-ncb" title="ลบ"
+                                                    ng-click="btn_del_Detail_item($index)">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <span style="font-size:14pt;font-weight:bold">แผนระดับที่ 3</span>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <span style="font-size:14pt;font-weight:bold">3.1 ตามมติ ครม. วันที่ 4 ธันวาคม
+                                            2560</span>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <input id="btn_add" class="btn btn-outline-primary" style="width:110px"
+                                            value="เพิ่มรายการ" ng-click="" />
+                                    </div>
+                                </div>
+                                <div>
+                                    <!-- get-list-Form Oject Array -->
+                                    <!-- <div ng-repeat="List_Form_D2"></div> -->
+                                    <div class="group-container">
+                                        <div class="row">
+                                            <div class="col-md-1 text-center padding-row"
+                                                style="padding-block-end: 10px;">แผนที่สอดคล้อง ($index)</div>
+                                            <div class="col-md-10"
+                                                style="padding:20px;padding-block-end:10px;background-color:lightblue">
+                                                <input class="form-control" type="text" title="ประเด็น"
+                                                    ng-model="item_2.Colunm1" />
+                                            </div>
+                                            <div class="col-md-1 text-center padding-row">
+                                                <button type="button" class="btn btn-outline-danger-ncb" title="ลบ"
+                                                    ng-click="btn_del_Detail_item($index)">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <span style="font-size:14pt;font-weight:bold">3.2
+                                            ความสอดคล้องกับนโยบายรัฐบาล</span> <span
+                                            style="color:red;font-size:small">โปรดเลือกอย่างน้อย 1 ตัวเลือก</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <!-- ng-repeat -->
+                                    <div style="height:15px"></div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="checkbox" class="form-check-input"
+                                                ng-model="FULL_MODEL.Budget_Request_Detail.Place_Operation"
+                                                ng-true-value="1"
+                                                ng-change="FULL_MODEL.Budget_Request_Detail.Place_Operation_Name = 'การพิทักษ์รักษาไว้ซึ้งสถาบันพระมหากษัตริย์'" />
+                                            การพิทักษ์รักษาไว้ซึ้งสถาบันพระมหากษัตริย์
+                                        </div>
+                                    </div>
+                                    <div style="height:15px"></div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="checkbox" class="form-check-input"
+                                                ng-model="FULL_MODEL.Budget_Request_Detail.Place_Operation"
+                                                ng-true-value="2"
+                                                ng-change="FULL_MODEL.Budget_Request_Detail.Place_Operation_Name = 'การส่งเสริมสถาบันศาสนา'" />
+                                            การส่งเสริมสถาบันศาสนา
+                                        </div>
+                                    </div>
+                                    <div style="height:15px"></div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="checkbox" class="form-check-input"
+                                                ng-model="FULL_MODEL.Budget_Request_Detail.Place_Operation"
+                                                ng-true-value="3"
+                                                ng-change="FULL_MODEL.Budget_Request_Detail.Place_Operation_Name = 'การปลูกฝังความรักในสถาบันหลักชาติ'" />
+                                            การปลูกฝังความรักในสถาบันหลักชาติ
+                                        </div>
+                                    </div>
+                                    <div style="height:15px"></div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="checkbox" class="form-check-input"
+                                                ng-model="FULL_MODEL.Budget_Request_Detail.Place_Operation"
+                                                ng-true-value="4"
+                                                ng-change="FULL_MODEL.Budget_Request_Detail.Place_Operation_Name = 'นโยบาย Digital Wallet'" />
+                                            นโยบาย Digital Wallet
+                                        </div>
+                                    </div>
+                                    <div style="height:15px"></div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="checkbox" class="form-check-input"
+                                                ng-model="FULL_MODEL.Budget_Request_Detail.Place_Operation"
+                                                ng-true-value="5"
+                                                ng-change="FULL_MODEL.Budget_Request_Detail.Place_Operation_Name = 'การแก้ปัญหาหนี้สินในภาคครัวเรือน'" />
+                                            การแก้ปัญหาหนี้สินในภาคครัวเรือน
+                                        </div>
+                                    </div>
+                                    <div style="height:15px"></div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="checkbox" class="form-check-input"
+                                                ng-model="FULL_MODEL.Budget_Request_Detail.Place_Operation"
+                                                ng-true-value="6"
+                                                ng-change="FULL_MODEL.Budget_Request_Detail.Place_Operation_Name = 'การลดภาระค่าใช้จ่ายด้านหลังงาน'" />
+                                            การลดภาระค่าใช้จ่ายด้านหลังงาน
+                                        </div>
+                                    </div>
+                                    <div style="height:15px"></div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="checkbox" class="form-check-input"
+                                                ng-model="FULL_MODEL.Budget_Request_Detail.Place_Operation"
+                                                ng-true-value="7"
+                                                ng-change="FULL_MODEL.Budget_Request_Detail.Place_Operation_Name = 'การผลักดันการท่องเที่่ยว'" />
+                                            การผลักดันการท่องเที่่ยว
+                                        </div>
+                                    </div>
+                                    <div style="height:15px"></div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="checkbox" class="form-check-input"
+                                                ng-model="FULL_MODEL.Budget_Request_Detail.Place_Operation"
+                                                ng-true-value="8"
+                                                ng-change="FULL_MODEL.Budget_Request_Detail.Place_Operation_Name = 'การแก้ปัญหารัฐธรรมนูฐ'" />
+                                            การแก้ปัญหารัฐธรรมนูฐ
+                                        </div>
+                                    </div>
+                                    <div style="height:15px"></div>
+                                    <div class="row">
+                                        <div class="col-md-6 text-left">
+                                            <span style="font-size:14pt;font-weight:bold">3.3
+                                                ความสอดคล้องกับนโยบายเร่งด่วนของรัฐบาล</span>
+                                        </div>
+                                    </div>
+                                    <div style="height:15px"></div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="checkbox" class="form-check-input"
+                                                ng-model="FULL_MODEL.Budget_Request_Detail.Place_Operation"
+                                                ng-true-value="1"
+                                                ng-change="FULL_MODEL.Budget_Request_Detail.Place_Operation_Name = 'การแก้ปัญหาในการดำรงชีวิตของประชาชน'" />
+                                            การแก้ปัญหาในการดำรงชีวิตของประชาชน
+                                        </div>
+                                    </div>
+                                    <div style="height:15px"></div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="checkbox" class="form-check-input"
+                                                ng-model="FULL_MODEL.Budget_Request_Detail.Place_Operation"
+                                                ng-true-value="2"
+                                                ng-change="FULL_MODEL.Budget_Request_Detail.Place_Operation_Name = 'การปรับปรุงระบบสวัสดิการและพัฒนาคุณภาพชีวิตของประชาชน'" />
+                                            การปรับปรุงระบบสวัสดิการและพัฒนาคุณภาพชีวิตของประชาชน
+                                        </div>
+                                    </div>
+                                    <div style="height:15px"></div>
+                                    <div class="row">
+                                        <div class="col-md-6 text-left">
+                                            <span style="font-size:14pt;font-weight:bold">3.4 กฎหมายที่เกี่ยวข้อง</span>
+                                        </div>
+                                    </div>
+                                    <div style="height:15px"></div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <input id="btn_add" class="btn btn-outline-primary" style="width:110px"
+                                                value="เพิ่มรายการ" ng-click="" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <!-- get-list-Form Oject Array -->
+                                        <!-- <div ng-repeat="List_Form_D3"></div> -->
+                                        <div class="group-container" style="padding:20px">
+                                            <div class="row">
+                                                <div class="col-md-1 text-center padding-row"
+                                                    style="width:60px;background-color:aliceblue">1</div>
+                                                <div class="col-md-10 text-left padding-row">
+                                                    <select chosen options="" ng-model="ddl_3">
+                                                        <!-- <option ng-repeat="item_d1 in " ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                        <option value="">1</option>
+                                                        <option value="">2</option>
+                                                        <option value="">3</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-1 text-center padding-row">
+                                                    <button type="button" class="btn btn-outline-danger-ncb" title="ลบ"
+                                                        ng-click="btn_del_Detail_item($index)">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="group-container" style="padding:20px">
+                                            <div class="row">
+                                                <div class="col-md-1 text-center padding-row"
+                                                    style="width:60px;background-color:aliceblue">2</div>
+                                                <div class="col-md-10 text-left padding-row">
+                                                    <select chosen options="" ng-model="ddl_3">
+                                                        <!-- <option ng-repeat="item_d1 in " ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                        <option value="">1</option>
+                                                        <option value="">2</option>
+                                                        <option value="">3</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-1 text-center padding-row">
+                                                    <button type="button" class="btn btn-outline-danger-ncb" title="ลบ"
+                                                        ng-click="btn_del_Detail_item($index)">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="height:15px"></div>
+                                    <div class="row">
+                                        <div class="col-md-6 text-left">
+                                            <span style="font-size:14pt;font-weight:bold">3.5
+                                                มติคณะรัฐมนตรีที่เกี่ยวข้อง</span>
+                                        </div>
+                                    </div>
+                                    <div style="height:15px"></div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-right">
+                                            <input id="btn_add" class="btn btn-outline-primary" style="width:110px"
+                                                value="เพิ่มรายการ" ng-click="" />
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <!-- get-list-Form Oject Array -->
+                                        <!-- <div ng-repeat="List_Form_D3"></div> -->
+                                        <div class="group-container" style="padding:20px">
+                                            <div class="row">
+                                                <div class="col-md-1 text-center padding-row"
+                                                    style="width:60px;background-color:aliceblue">1</div>
+                                                <div class="col-md-10 text-left padding-row">
+                                                    <select chosen options="" ng-model="ddl_3">
+                                                        <!-- <option ng-repeat="item_d1 in " ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                        <option value="">1</option>
+                                                        <option value="">2</option>
+                                                        <option value="">3</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-1 text-center padding-row">
+                                                    <button type="button" class="btn btn-outline-danger-ncb" title="ลบ"
+                                                        ng-click="btn_del_Detail_item($index)">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="group-container" style="padding:20px">
+                                            <div class="row">
+                                                <div class="col-md-1 text-center padding-row"
+                                                    style="width:60px;background-color:aliceblue">2</div>
+                                                <div class="col-md-10 text-left padding-row">
+                                                    <select chosen options="" ng-model="ddl_3">
+                                                        <!-- <option ng-repeat="item_d1 in " ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                        <option value="">1</option>
+                                                        <option value="">2</option>
+                                                        <option value="">3</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-1 text-center padding-row">
+                                                    <button type="button" class="btn btn-outline-danger-ncb" title="ลบ"
+                                                        ng-click="btn_del_Detail_item($index)">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="height:15px"></div>
+                                    <div class="row">
+                                        <div class="col-md-6 text-left">
+                                            <span style="color:red;font-size:small">*</span><span
+                                                style="font-size:14pt;font-weight:bold">3.6
+                                                ความสอดคล้องกับแผนปฏิบัติการราชการกระทรวงสาธารณสุข</span><span
+                                                style="color:red;font-size:small"> โปรดเลือกอย่างน้อย 1 ตัวเลือก</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <!-- ng-repeat -->
+                                        <div style="height:15px"></div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <input type="checkbox" class="form-check-input"
+                                                    ng-model="FULL_MODEL.Budget_Request_Detail.Place_Operation"
+                                                    ng-true-value="1"
+                                                    ng-change="FULL_MODEL.Budget_Request_Detail.Place_Operation_Name = 'เรื่องส่งเสริมสุขภาพ ป้องกันโรค และคุ้มครองผู้บริโภคเป็นเลิศ (Promotion, Prevention & Protection Excellence)'" />
+                                                เรื่องส่งเสริมสุขภาพ ป้องกันโรค และคุ้มครองผู้บริโภคเป็นเลิศ (Promotion,
+                                                Prevention & Protection Excellence)
+                                            </div>
+                                        </div>
+                                        <div style="height:15px"></div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <input type="checkbox" class="form-check-input"
+                                                    ng-model="FULL_MODEL.Budget_Request_Detail.Place_Operation"
+                                                    ng-true-value="1"
+                                                    ng-change="FULL_MODEL.Budget_Request_Detail.Place_Operation_Name = 'เรื่องบริการเป็นเลิศ (Service Excellence)'" />
+                                                เรื่องบริการเป็นเลิศ (Service Excellence)
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="height:15px"></div>
+                                    <div class="row">
+                                        <div class="col-md-6 text-left">
+                                            <span style="color:red;font-size:small">*</span><span
+                                                style="font-size:14pt;font-weight:bold">3.7
+                                                เป้าหมายหลักสำนักงานคณะกรรมการอาหารและยา</span>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="group-container">
+                                            <!-- ng-repeat -->
+                                            <div class="row">
+                                                <div class="col-md-1 text-center padding-row"
+                                                    style="width:60px;background-color:aliceblue">
+                                                    <input type="checkbox" class="form-check-input"
+                                                        ng-model="FULL_MODEL.Budget_Request_Detail.Place_Operation"
+                                                        ng-true-value="1"
+                                                        ng-change="FULL_MODEL.Budget_Request_Detail.Place_Operation_Name = 'ผู้บริโภคปลอดภัย'" />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    ผู้บริโภคปลอดภัย
+                                                    <br />
+                                                    <span style="color:cornflowerblue">หมายเหตุ/คำอธิบายอื่นๆ</span>
+                                                    <input type="text" class="form-control" ng-model="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="group-container">
+                                            <!-- ng-repeat -->
+                                            <div class="row">
+                                                <div class="col-md-1 text-center padding-row"
+                                                    style="width:60px;background-color:aliceblue">
+                                                    <input type="checkbox" class="form-check-input"
+                                                        ng-model="FULL_MODEL.Budget_Request_Detail.Place_Operation"
+                                                        ng-true-value="1"
+                                                        ng-change="FULL_MODEL.Budget_Request_Detail.Place_Operation_Name = 'ผู้บริโภคปลอดภัย'" />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    ผุ้ประกอบการพัฒนาไกล
+                                                    <br />
+                                                    <span style="color:cornflowerblue">หมายเหตุ/คำอธิบายอื่นๆ</span>
+                                                    <input type="text" class="form-control" ng-model="" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div style="height:15px"></div>
+                                    <div class="row">
+                                        <div class="col-md-6 text-left">
+                                            <span style="color:red;font-size:small">*</span><span
+                                                style="font-size:14pt;font-weight:bold">3.8
+                                                ความสอดคล้องกับยุทธศาสตร์สำนักงานคณะกรรมการอาหารและยา</span><span
+                                                style="color:red;font-size:small"> โปรดกำหนดค่าอย่างน้อย 1
+                                                ยุทธศาสตร์</span>
+                                        </div>
+                                    </div>
+                                    <div class="group-container">
+                                        <!-- ng-repeat -->
+                                        <div class="row">
+                                            <div class="col-md-1 text-center padding-row"
+                                                style="width:60px;background-color:aliceblue">
+                                                <input type="checkbox" class="form-check-input"
+                                                    ng-model="FULL_MODEL.Budget_Request_Detail.Place_Operation"
+                                                    ng-true-value="1"
+                                                    ng-change="FULL_MODEL.Budget_Request_Detail.Place_Operation_Name = 'ยุทธศาสตร์ที่ 1:ระบบคุ้มครองผู้บริโภคด้านผลิตภัณฑ์สุขภาพมาตรฐานสากล'" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                ยุทธศาสตร์ที่ 1:ระบบคุ้มครองผู้บริโภคด้านผลิตภัณฑ์สุขภาพมาตรฐานสากล
+                                                <br />
+                                                <span style="color:cornflowerblue">กลยุทธ์ข้อที่</span>
+                                                <select chosen options="" ng-model="ddl_3">
+                                                    <!-- <option ng-repeat="item_d1 in " ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                    <option value="">กลยุทธ์ 1</option>
+                                                    <option value="">กลยุทธ์ 2</option>
+                                                    <option value="">กลยุทธ์ 3</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <br />
+                                                <span style="color:cornflowerblue">มาตรการที่</span>
+                                                <select chosen options="" ng-model="ddl_3">
+                                                    <!-- <option ng-repeat="item_d1 in " ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                    <option value="">มาตรการที่ 1</option>
+                                                    <option value="">มาตรการที่ 2</option>
+                                                    <option value="">มาตรการที่ 3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group-container">
+                                        <!-- @*ng-repeat -->
+                                        <div class="row">
+                                            <div class="col-md-1 text-center padding-row"
+                                                style="width:60px;background-color:aliceblue">
+                                                <input type="checkbox" class="form-check-input"
+                                                    ng-model="FULL_MODEL.Budget_Request_Detail.Place_Operation"
+                                                    ng-true-value="1"
+                                                    ng-change="FULL_MODEL.Budget_Request_Detail.Place_Operation_Name = 'ยุทธศาสตร์ที่ 1:ระบบคุ้มครองผู้บริโภคด้านผลิตภัณฑ์สุขภาพมาตรฐานสากล'" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                ยุทธศาสตร์ที่ 2:ส่งเสริมและพัฒนาความรอบรู้ด้านผลิตภัณฑ์สุขภาพ
+                                                <br />
+                                                <span style="color:cornflowerblue">กลยุทธ์ข้อที่</span>
+                                                <select chosen options="" ng-model="ddl_3">
+                                                    <!-- <option ng-repeat="item_d1 in " ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                    <option value="">กลยุทธ์ 1</option>
+                                                    <option value="">กลยุทธ์ 2</option>
+                                                    <option value="">กลยุทธ์ 3</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <br />
+                                                <span style="color:cornflowerblue">มาตรการที่</span>
+                                                <select chosen options="" ng-model="ddl_3">
+                                                    <!-- <option ng-repeat="item_d1 in " ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                    <option value="">มาตรการ 1</option>
+                                                    <option value="">มาตรการ 2</option>
+                                                    <option value="">มาตรการ 3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group-container">
+                                        <!-- ng-repeat -->
+                                        <div class="row">
+                                            <div class="col-md-1 text-center padding-row"
+                                                style="width:60px;background-color:aliceblue">
+                                                <input type="checkbox" class="form-check-input"
+                                                    ng-model="FULL_MODEL.Budget_Request_Detail.Place_Operation"
+                                                    ng-true-value="1"
+                                                    ng-change="FULL_MODEL.Budget_Request_Detail.Place_Operation_Name = 'ยุทธศาสตร์ที่ 1:ระบบคุ้มครองผู้บริโภคด้านผลิตภัณฑ์สุขภาพมาตรฐานสากล'" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                ยุทธศาสตร์ที่ 3:ความมั่นคงของผลิตภัณฑ์สุขภาพ
+                                                <br />
+                                                <span style="color:cornflowerblue">กลยุทธ์ข้อที่</span>
+                                                <select chosen options="" ng-model="ddl_3">
+                                                    <!-- <option ng-repeat="item_d1 in " ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                    <option value="">กลยุทธ์ 1</option>
+                                                    <option value="">กลยุทธ์ 2</option>
+                                                    <option value="">กลยุทธ์ 3</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <br />
+                                                <span style="color:cornflowerblue">มาตรการที่</span>
+                                                <select chosen options="" ng-model="ddl_3">
+                                                    <!-- <option ng-repeat="item_d1 in " ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                    <option value="">มาตรการที่ 1</option>
+                                                    <option value="">มาตรการที่ 2</option>
+                                                    <option value="">มาตรการที่ 3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group-container">
+                                        <!-- @*ng-repeat*@ -->
+                                        <div class="row">
+                                            <div class="col-md-1 text-center padding-row"
+                                                style="width:60px;background-color:aliceblue">
+                                                <input type="checkbox" class="form-check-input"
+                                                    ng-model="FULL_MODEL.Budget_Request_Detail.Place_Operation"
+                                                    ng-true-value="1"
+                                                    ng-change="FULL_MODEL.Budget_Request_Detail.Place_Operation_Name = 'ยุทธศาสตร์ที่ 1:ระบบคุ้มครองผู้บริโภคด้านผลิตภัณฑ์สุขภาพมาตรฐานสากล'" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                ยุทธศาสตร์ที่ 4:ศูนย์กลางผลิตภัณฑ์สุขภาพที่เป็นเลิศ
+                                                <br />
+                                                <span style="color:cornflowerblue">กลยุทธ์ข้อที่</span>
+                                                <select chosen options="" ng-model="ddl_3">
+                                                    <!-- <option ng-repeat="item_d1 in " ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                    <option>กลยุทธ์ 1</option>
+                                                    <option>กลยุทธ์ 2</option>
+                                                    <option>กลยุทธ์ 3</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <br />
+                                                <span style="color:cornflowerblue">มาตรการที่</span>
+                                                <select chosen options="" ng-model="ddl_3">
+                                                    <!-- <option ng-repeat="item_d1 in " ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                    <option value="">มาตรการที่ 1</option>
+                                                    <option value="">มาตรการที่ 2</option>
+                                                    <option value="">มาตรการที่ 3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="group-container">
+                                        <!-- @*ng-repeat*@ -->
+                                        <div class="row">
+                                            <div class="col-md-1 text-center padding-row"
+                                                style="width:60px;background-color:aliceblue">
+                                                <input type="checkbox" class="form-check-input"
+                                                    ng-model="FULL_MODEL.Budget_Request_Detail.Place_Operation"
+                                                    ng-true-value="1"
+                                                    ng-change="FULL_MODEL.Budget_Request_Detail.Place_Operation_Name = 'ยุทธศาสตร์ที่ 1:ระบบคุ้มครองผู้บริโภคด้านผลิตภัณฑ์สุขภาพมาตรฐานสากล'" />
+                                            </div>
+                                            <div class="col-md-6">
+                                                ยุทธศาสตร์ที่ 5:องค์กรสมรรถนะสูงด้วยนวัตกรรมและดิจิทัล
+                                                <br />
+                                                <span style="color:cornflowerblue">กลยุทธ์ข้อที่</span>
+                                                <select chosen options="" ng-model="ddl_3">
+                                                    <!-- <option ng-repeat="item_d1 in " ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                    <option value="">กลยุทธ์ข้อ 1</option>
+                                                    <option value="">กลยุทธ์ข้อ 2</option>
+                                                    <option value="">กลยุทธ์ข้อ 3</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <br />
+                                                <span style="color:cornflowerblue">มาตรการที่</span>
+                                                <select chosen options="" ng-model="ddl_3">
+                                                    <!-- <option ng-repeat="item_d1 in " ng-value="{{item_d1.Position_Id}}">{{item_d1.Position_Name}}</option> -->
+                                                    <option value="">มาตรการที่ 1</option>
+                                                    <option value="">มาตรการที่ 2</option>
+                                                    <option value="">มาตรการที่ 3</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- End Body In Tap1 / ส่่วนที่ 2 -->
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2">
+                    <a ngbNavLink>
+                        ส่วนที่ 3
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div class="d-flex">
+                            <div class="flex-grow-1 ms-2">
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-md-6 text-left">
+                                            <span
+                                                style="font-size:14pt;font-weight:bold">รายละเอียดแผนงาน/โครงการ/การดำเนินการ
+                                                (X)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <span style="color:red">*</span><span>1.หลักการและเหตุผล</span><span
+                                            style="color:red;font-size:small"> โปรดระบุค่านี้ก่อน</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <textarea class="form-control" rows="3" title="เป้าหมายหลัก SDGs (Targets)"
+                                            ng-model="item_2.Colunm6" style="height:120px"></textarea>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <span style="color:red">*</span><span>2.วัตถุประสงค์</span><span
+                                            style="color:red;font-size:small"> โปรดระบุค่านี้ก่อน</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <textarea class="form-control" rows="3" title="เป้าหมายหลัก SDGs (Targets)"
+                                            ng-model="item_2.Colunm6" style="height:120px"></textarea>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <span style="font-size:14pt;font-weight:bold">3 เป้าหมายการดำเนินโครงการ</span>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <span style="color:red">*</span><span>3.1 เป้าหมายเชิงผลผลิต
+                                            (Output)</span><span style="color:red;font-size:small">
+                                            โปรดระบุค่านี้ก่อน</span>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <textarea class="form-control" rows="3" title="เป้าหมายหลัก SDGs (Targets)"
+                                            ng-model="item_2.Colunm6" style="height:120px"></textarea>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <span style="color:red">*</span><span>3.2 เป้าหมายเชิงผลลัพธ์
+                                            (Outcome)</span><span style="color:red;font-size:small">
+                                            โปรดระบุค่านี้ก่อน</span>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <textarea class="form-control" rows="3" title="เป้าหมายหลัก SDGs (Targets)"
+                                            ng-model="item_2.Colunm6" style="height:120px"></textarea>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <span style="color:red">*</span><span>4.ผลที่คาดว่าจะเกิด</span><span
+                                            style="color:red;font-size:small"> โปรดระบุค่านี้ก่อน</span>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <textarea class="form-control" rows="3" title="เป้าหมายหลัก SDGs (Targets)"
+                                            ng-model="item_2.Colunm6" style="height:120px"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <hr style="color:red" />
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <span style="font-size:14pt;font-weight:bold">5. ตัวชี้วัดและค่าเป้าหมายโครงการ
+                                            (KPI)</span>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <span style="color:red">*</span><span>ตัวชี้วัดผลผลิต (Output)</span><span
+                                            style="color:red;font-size:small"> โปรดระบุค่านี้ก่อน</span>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <textarea class="form-control" rows="3" title="เป้าหมายหลัก SDGs (Targets)"
+                                            ng-model="item_2.Colunm6" style="height:120px"></textarea>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <span style="color:red">*</span><span>5.2 ตัวชี้วัดผลลัพธ์ (Outcome)</span><span
+                                            style="color:red;font-size:small"> โปรดระบุค่านี้ก่อน</span>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <textarea class="form-control" rows="3" title="เป้าหมายหลัก SDGs (Targets)"
+                                            ng-model="item_2.Colunm6" style="height:120px"></textarea>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <span style="font-size:14pt;font-weight:bold">6. ความสำเร็จของตัวชี้วัดรายไตรมาส
+                                            (Small Success)</span>
+                                    </div>
+                                </div>
+                                <div class="row" style="background-color: aliceblue">
+                                    <div class="col-md-2">
+                                        <span style="color:red">*</span><span>เป้าหมาย</span><span
+                                            style="color:red;font-size:small"> โปรดระบุค่านี้ก่อน</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <span style="color:red">*</span><span>ไตรมาส 1</span><span
+                                            style="color:red;font-size:small"> โปรดระบุค่านี้ก่อน</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <span style="color:red">*</span><span>ไตรมาส 2</span><span
+                                            style="color:red;font-size:small"> โปรดระบุค่านี้ก่อน</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <span style="color:red">*</span><span>ไตรมาส 3</span><span
+                                            style="color:red;font-size:small"> โปรดระบุค่านี้ก่อน</span>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <span style="color:red">*</span><span>ไตรมาส 4</span><span
+                                            style="color:red;font-size:small"> โปรดระบุค่านี้ก่อน</span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <textarea class="form-control" rows="3" placeholder="เป้าหมาย"
+                                            ng-model="item_2.Colunm6" style="height:120px"></textarea>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <textarea class="form-control" rows="3"
+                                            placeholder="เป้าหมายความสำเร็จไตรมาส 1 (Small Success)"
+                                            ng-model="item_2.Colunm6" style="height:120px"></textarea>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <textarea class="form-control" rows="3"
+                                            placeholder="เป้าหมายความสำเร็จไตรมาส 2 (Small Success)"
+                                            ng-model="item_2.Colunm6" style="height:120px"></textarea>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <textarea class="form-control" rows="3"
+                                            placeholder="เป้าหมายความสำเร็จไตรมาส 3 (Small Success)"
+                                            ng-model="item_2.Colunm6" style="height:120px"></textarea>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <textarea class="form-control" rows="3"
+                                            placeholder="เป้าหมายความสำเร็จไตรมาส 4 (Small Success)"
+                                            ng-model="item_2.Colunm6" style="height:120px"></textarea>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <span style="color:red">*</span><span>7.
+                                            กลุ่มเป้าหมาย/ผู้ได้รับผลประโยชน์</span><span
+                                            style="color:red;font-size:small"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <textarea class="form-control" rows="3"
+                                            placeholder="กลุ่มเป้าหมาย หรือ ผู้ได้รับผลประโยชน์ จากการดำเนินโครงการนี้"
+                                            ng-model="item_2.Colunm6" style="height:120px"></textarea>
+                                    </div>
+                                </div>
+                                <div style="height:15px"></div>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <span style="color:red">*</span><span>8. พื้นที่การดำเนินการ</span><span
+                                            style="color:red;font-size:small"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <textarea class="form-control" rows="3" placeholder="พื้นที่การดำเนินการ"
+                                            ng-model="item_2.Colunm6" style="height:120px"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <hr style="color:red" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 text-left">
+                                        <span style="color:red">*</span><span>9. ระยะเวลาในการดำเนินโครงการ</span><span
+                                            style="color:red;font-size:small"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <input type="text" class="datepicker" id="SelectDate" ng-model="SelectDate"
+                                            data-provide="datepicker" data-date-language="th-th" autocomplete="off"
+                                            placeholder="โปรดเลือกปฎิทิน ช่วงวันที่ในการดำเนินโครงการ (บังคับ)" />
+                                        <label class="input-group-btn" for="SelectDate" style="width: 0%">
+                                            <span class="bi bi-calendar3"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <hr style="color:red" />
+                                    </div>
+                                </div>
+<!-- End Body In Tap1 / ส่่วนที่ 3 -->
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="3">
+                    <a ngbNavLink>
+                        ส่วนที่ 4
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div class="d-flex">
+                            <div class="flex-grow-1 ms-2">
+<div class="form-body">
+    <div class="row">
+        <div class="col-md-3 text-left"><span style="color:red;font-size:small">วงเงินงบประมาณของโครงการต้องมากกว่า 0 บาท</span></div>
+        <div class="col-md-9 text-right">
+            <input id="btn_add" class="btn btn-outline-primary" style="width:110px" value="เพิ่มกิจกรรม" ng-click="" />
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <!-- @*ng-repeat list*@ -->
+<div>
+    <div class="row">
+        <div class="col-md-1">
+            <span>กิจกรรม :</span><span style="color:red">1</span>
+            <button class="btn btn-outline-success-ncb"> <i class="fas fa-plus-square" style="color:green"></i></button>
+        </div>
+        <div class="col-md-3 text-left">
+            <input type="text" ng-model="item_detial.Activity_Name" class="form-control" />
+        </div>
+
+        <div class="col-md-1 text-right">ไตรมาส 1 : ต.ค.</div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month10" />
+        </div>
+        <div class="col-md-1 text-right">พ.ย.</div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month11" />
+        </div>
+        <div class="col-md-1 text-right">ธ.ค.</div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month12" />
+        </div>
+        <div class="col-md-1">
+            รวม <span style="color:red">0.00</span> บาท
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="btn btn-outline-danger-ncb" title="ลบ" ng-click="btn_del_Detail_item($index)">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4 text-right">
+        </div>
+
+        <div class="col-md-1 text-right">
+            ไตรมาส 2 : ม.ค.
+        </div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month1" />
+        </div>
+        <div class="col-md-1 text-right">ก.พ.</div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month11" />
+        </div>
+        <div class="col-md-1 text-right">มี.ค.</div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month12" />
+        </div>
+        <div class="col-md-1">
+            รวม <span style="color:red">0.00</span> บาท
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-1 text-right">
+            ไตรมาส 3 : เม.ย.
+        </div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month1" />
+        </div>
+        <div class="col-md-1 text-right">พ.ค.</div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month2" />
+        </div>
+        <div class="col-md-1 text-right">มิ.ย.</div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month3" />
+        </div>
+        <div class="col-md-1">
+            รวม <span style="color:red">0.00</span> บาท
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-1 text-right">
+            ไตรมาส 4 : ก.ค.
+        </div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month4" />
+        </div>
+        <div class="col-md-1 text-right">ส.ค.</div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month5" />
+        </div>
+        <div class="col-md-1 text-right">ก.ย.</div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month6" />
+        </div>
+        <div class="col-md-1">
+            รวม <span style="color:red">0.00</span> บาท
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-1 text-right">
+ 
+        </div>
+        <div class="col-md-1 text-left">
+
+        </div>
+        <div class="col-md-1 text-right"></div>
+        <div class="col-md-1 text-left">
+            
+        </div>
+        <div class="col-md-1 text-right"></div>
+        <div class="col-md-2 text-right">
+            รวมทั้งสิ้น <span style="color:red">0.00</span> บาท
+        </div>
+    </div>
+</div>
+<br />
+<div>
+    <div class="row">
+        <div class="col-md-1 text-right">
+            <span>กิจกรรม :</span><span style="color:orange">1.1</span>
+        </div>
+        <div class="col-md-3 text-left">
+            <input type="text" ng-model="item_detial.Activity_Name" class="form-control" />
+        </div>
+        <div class="col-md-1 text-right">ไตรมาส 1 : ต.ค.</div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month10" />
+        </div>
+        <div class="col-md-1 text-right">พ.ย.</div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month11" />
+        </div>
+        <div class="col-md-1 text-right">ธ.ค.</div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month12" />
+        </div>
+        <div class="col-md-1">
+            รวม <span style="color:red">0.00</span> บาท
+        </div>
+        <div class="col-md-1">
+            <button type="button" class="btn btn-outline-danger-ncb" title="ลบ" ng-click="btn_del_Detail_item($index)">
+                <i class="fas fa-trash-alt"></i>
+            </button>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-1 text-right">
+            ไตรมาส 2 : ม.ค.
+        </div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month1" />
+        </div>
+        <div class="col-md-1 text-right">ก.พ.</div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month11" />
+        </div>
+        <div class="col-md-1 text-right">มี.ค.</div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month12" />
+        </div>
+        <div class="col-md-1">
+            รวม <span style="color:red">0.00</span> บาท
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-1 text-right">
+            ไตรมาส 3 : เม.ย.
+        </div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month1" />
+        </div>
+        <div class="col-md-1 text-right">พ.ค.</div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month2" />
+        </div>
+        <div class="col-md-1 text-right">มิ.ย.</div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month3" />
+        </div>
+        <div class="col-md-1">
+            รวม <span style="color:red">0.00</span> บาท
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-1 text-right">
+            ไตรมาส 4 : ก.ค.
+        </div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month4" />
+        </div>
+        <div class="col-md-1 text-right">ส.ค.</div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month5" />
+        </div>
+        <div class="col-md-1 text-right">ก.ย.</div>
+        <div class="col-md-1 text-left">
+            <input type="text" class="form-control" ng-model="item_detial.plan_amount_month6" />
+        </div>
+        <div class="col-md-1">
+            รวม <span style="color:red">0.00</span> บาท
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-1 text-right">
+
+        </div>
+        <div class="col-md-1 text-left">
+
+        </div>
+        <div class="col-md-1 text-right"></div>
+        <div class="col-md-1 text-left">
+
+        </div>
+        <div class="col-md-1 text-right"></div>
+        <div class="col-md-2 text-right">
+            รวมทั้งสิ้น <span style="color:red">0.00</span> บาท
+        </div>
+    </div>
+</div>
+</div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+            </ul>
+            <div class="tab-content text-muted">
+                <div [ngbNavOutlet]="Border"></div>
+            </div>
+
+        </div><!--end col-->
+    </div>
+
+
+
+</section>

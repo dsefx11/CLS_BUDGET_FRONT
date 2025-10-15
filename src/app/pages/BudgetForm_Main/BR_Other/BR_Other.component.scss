@@ -1,0 +1,44 @@
+/* ลบ progress bar ทั้งหมดออกจาก dropzone โดยตรง */
+.dropzone .dz-preview .dz-progress {
+    display: none !important;
+    height: 0 !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    z-index: -1 !important;
+    visibility: hidden !important;
+}
+
+/* เพิ่มสไตล์สำหรับแสดงสถานะสำเร็จแทน */
+.dropzone .dz-preview {
+    position: relative;
+}
+
+.dropzone .dz-preview:after {
+    content: "✓";
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-size: 16px;
+    color: #28a745;
+    background: rgba(255, 255, 255, 0.8);
+    width: 22px;
+    height: 22px;
+    line-height: 22px;
+    text-align: center;
+    border-radius: 50%;
+    display: block;
+    z-index: 100;
+}
+
+.text-right {
+    text-align: right;
+}
+.text-left {
+    text-align: left;
+}
+
+tr.tr-center {
+    text-align: center;
+}

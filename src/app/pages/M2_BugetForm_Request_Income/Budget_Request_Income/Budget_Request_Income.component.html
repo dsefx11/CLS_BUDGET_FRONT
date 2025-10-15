@@ -1,0 +1,218 @@
+<section id="Content">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">คำขอเงินรายได้</h4>
+                    <div class="flex-shrink-0">
+                        <label for=" searchInput" class="form-label">ค้นหา :</label>
+                    </div>
+                    <div class="search-box d-inline-block mb-2">
+                        <input type="text" class="form-control search" placeholder="Search..."
+                            [(ngModel)]="service.searchTerm" (input)="onFilter(service.searchTerm)">
+                        <i class="ri-search-line search-icon"></i>
+                    </div>
+                </div><!-- end card header -->
+                <div class="card-body">
+                    <div style="height:15px"></div>
+                    <div class="row">
+                        <div class="col-md-5">
+
+                            <label class="form-label">
+                                หัวข้อคำขอเงินรายได้
+                            </label>
+                            <ng-select [items]="List_Mas_Request_Income" bindLabel="Request_Income_Name"
+                                bindValue="Request_Income_Id" [(ngModel)]="Budget_Request_Income.Topic_Income_Id"
+                                [placeholder]="'กรุณาเลือก'" (change)="Choose_Mas_Request_Income()">
+                                <ng-template ng-option-tmp let-h1="item">
+                                    {{ h1.Request_Income_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                        <!-- <div class="col-md-3" *ngIf="Budget_Request_Income.Topic_Income_Id == 1">
+                            <label class="form-label">
+                                บัญชี
+                            </label>
+                            <ng-select [items]="List_Mas_Request_Income_Detail" bindLabel="Request_Name"
+                                bindValue="Request_Income_Detail_Id"
+                                [(ngModel)]="Budget_Request_Income.Topic_Income_Sub_Id" [placeholder]="'กรุณาเลือก'"
+                                (change)="Choose_Mas_Request_Income_Detail()">
+                                <ng-template ng-option-tmp let-h2="item">
+                                    {{ h2.Request_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div> -->
+                        <div class="col-md-5" *ngIf="Budget_Request_Income.Topic_Income_Id >0">
+                            <label class="form-label" *ngIf="Budget_Request_Income.Topic_Income_Id == 1 ">
+                                บัญชี
+                            </label>
+                            <label class="form-label" *ngIf="Budget_Request_Income.Topic_Income_Id == 2 || Budget_Request_Income.Topic_Income_Id == 3">
+                                ค่าใช้จ่าย
+                            </label>
+                            <label class="form-label" *ngIf="Budget_Request_Income.Topic_Income_Id == 4 ">
+                                ค่าตอบแทน
+                            </label>
+                            <label class="form-label" *ngIf="Budget_Request_Income.Topic_Income_Id == 5 ">
+                                ค่าซ่อมแซม
+                            </label>
+                            <label class="form-label" *ngIf="Budget_Request_Income.Topic_Income_Id == 6 ">
+                                ค่าซื้อหรือค่าเช่าครุภัณฑ์
+                            </label>
+                            <ng-select [items]="List_Mas_Request_Income_Detail" bindLabel="Request_Name"
+                                bindValue="Request_Income_Detail_Id"
+                                [(ngModel)]="Budget_Request_Income.Topic_Income_Sub_Id" [placeholder]="'กรุณาเลือก'"
+                                (change)="Choose_Mas_Request_Income_Detail()">
+                                <ng-template ng-option-tmp let-h2="item">
+                                    {{ h2.Request_Name}}
+                                </ng-template>
+                            </ng-select>
+                            <!-- <ng-select [items]="List_Mas_Project" bindLabel="Project_Name"
+                                bindValue="Project_Id"
+                                [(ngModel)]="Budget_Request_Income.Topic_Income_Sub_Id" [placeholder]="'กรุณาเลือก'"
+                                (change)="Choose_Mas_Request_Income_Detail()">
+                                <ng-template ng-option-tmp let-h3="item">
+                                    {{ h3.Project_Name}}
+                                </ng-template>
+                            </ng-select> -->
+                        </div>
+                        <div class="col-md-2 text-end">
+                            <button type="button" class="btn btn-soft-danger waves-effect waves-light"
+                                (click)="Clear_Form(old_Budget_Request_Income)" >
+                                <i class=" ri-refresh-line"></i>
+                            </button>
+                            <button type="button" class="btn btn-soft-primary waves-effect waves-light"
+                                data-bs-toggle="modal" data-bs-target="#exampleModalgrid"
+                                (click)="btn_add_fullModal(fullDataModal,0, old_Budget_Request_Income)">
+                                เพิ่มคำขอ
+                            </button>
+                        </div>
+                    </div>
+                    <div style="height:15px"></div>
+                    <div class="row align-items-center">
+                        <!-- <div class="col-12 col-sm-3 col-md-2 col-lg-1 text-sm-end">
+                            <label for="departmentSelect" class="form-label">หน่วยงาน:</label>
+                        </div> -->
+                        <!-- <div class="col-12 col-sm-9 col-md-6 col-lg-7">
+                            <ng-select [items]="List_Mas_Request_Income" bindLabel="Request_Income_Name"
+                                bindValue="Request_Income_Id" [(ngModel)]="Request_Income_Id" [placeholder]="'เลือกหน่วยงาน'"
+                                (change)="Choose_Mas_Request_Income(Request_Income_Id)">
+                                <ng-template ng-option-tmp let-s1="item">
+                                    {{ s1.Request_Income_Name}}
+                                </ng-template>
+                            </ng-select>
+                        </div> -->
+
+                        
+                    </div>
+                    <div style="height:15px"></div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <table class="table table-gridjs" style="width:100%" >
+                                <thead>
+                                    <tr class="tr-center">
+                                        <th >ลำดับ</th>
+                                        <th class="sort" (click)="onSort('Topic_Income_Name')">หัวข้อคำขอเงินรายได้</th>
+                                        <th class="sort" (click)="onSort('Topic_Income_Sub_Name')">หัวข้อย่อย</th>
+                                        <th class="sort" (click)="onSort('Total')">มูลค่ารวม</th>
+                                        <th>แก้ไข</th>
+                                        <th>ลบ</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="tr-center" *ngFor="let item of List_Budget_Request_Income; let i = index">
+                                        <td>{{i + 1}}</td>
+                                        <td>{{item.Topic_Income_Name}}</td>
+                                        <td>{{item.Topic_Income_Sub_Name}}</td>
+                                        <td>{{MasterService.show_fix(item.Total || 0)}}</td>
+                                        <td>
+                                            <button type="button" class="btn btn-ghost-warning waves-effect waves-light"
+                                                data-bs-toggle="modal" data-bs-target="#Modal1"
+                                                (click)="btn_add_fullModal(fullDataModal,item.Request_Income_Id, item.Budget_Request_Income)">
+                                                <i class="ri-edit-2-fill" style="color: orange;font-size: 20px;"></i>
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-ghost-danger waves-effect waves-light"
+                                                (click)="Del_Request_Income(item.Request_Income_Id)">
+                                                <i class="ri-delete-bin-6-fill"
+                                                    style="color: orangered;font-size: 20px;"></i>
+                                            </button>
+                                        </td>                                       
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<ng-template #fullDataModal let-modal>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="Modal1">เพิ่มคำขอเงินรายได้</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                (click)="modal.dismiss('Close click')"></button>
+        </div>
+        <div class="modal-body">
+                    <div class="row" *ngIf="(Budget_Request_Income.Total || 0) != 0">
+                        <div class="col-4">
+                            <h3>มูลค่ารวม: <span style="color:red">{{calculatedTotal_Request}} บาท</span></h3>
+                        </div>
+                    </div>
+
+                    <div *ngIf="formPartial == 'Request_Income_Detail'">
+                        <Request_Income_Detail [Bgyear]="Bgyear" [Department_Id] = "Department_Id"  [Sub_From_Name] = "Sub_From_Name"
+                        [Budget_Request_Income_Multi_Item]="Budget_Request_Income_Multi_Item"
+                            [List_Budget_Request_Income_Multi_Item]="List_Budget_Request_Income_Multi_Item"
+                            [Budget_Request_Income]="Budget_Request_Income"
+                            [List_Budget_Request_Detail_Item]="List_Budget_Request_Detail_Item"
+                            [Budget_Request_Detail_Item]="Budget_Request_Detail_Item"
+                            (calculatedTotalChange)="onCalculatedTotalChange($event)"
+                            [calculatedTotal_Front]="calculatedTotal_Front" >
+                        </Request_Income_Detail>
+                    </div>
+                    <div *ngIf="formPartial == 'Project_Form'">
+                        <Project_Form [Bgyear]="Bgyear" [Department_Id] = "Department_Id" 
+                        [Budget_Request_Income_Multi_Item]="Budget_Request_Income_Multi_Item"
+                            [List_Budget_Request_Income_Multi_Item]="List_Budget_Request_Income_Multi_Item"
+                            [Budget_Request_Income_Strategy_Sub_Item]="Budget_Request_Income_Strategy_Sub_Item"
+                            [List_Budget_Request_Income_Strategy_Sub_Item]="List_Budget_Request_Income_Strategy_Sub_Item"
+                            [Budget_Request_Income_Consistency_MS_Plan_Item]="Budget_Request_Income_Consistency_MS_Plan_Item"
+                            [List_Budget_Request_Income_Consistency_MS_Plan_Item]="List_Budget_Request_Income_Consistency_MS_Plan_Item"
+                            [List_Budget_Request_Income_Project_Consistency_Item]="List_Budget_Request_Income_Project_Consistency_Item"
+                            [List_Budget_Request_Income_Project_Detial_Item]="List_Budget_Request_Income_Project_Detial_Item"
+                            [List_Budget_Request_Income_Consistent_Plan_Nation_Item]="List_Budget_Request_Income_Consistent_Plan_Nation_Item"
+                            [List_Budget_Request_Income_Consistent_Plan_Item]="List_Budget_Request_Income_Consistent_Plan_Item"
+                            [List_Budget_Request_Income_Law_Relate_Item]="List_Budget_Request_Income_Law_Relate_Item"
+                            [List_Budget_Request_Income_Cabinet_Resolution_Item]="List_Budget_Request_Income_Cabinet_Resolution_Item"
+                            [List_Budget_Request_Income_Multi_Week_Plan_Item]="List_Budget_Request_Income_Multi_Week_Plan_Item"
+                            [List_Budget_Request_Income_Multi_Plan_Item]="List_Budget_Request_Income_Multi_Plan_Item"
+                            [List_Budget_Request_Income_Multi_Sub_Item]="List_Budget_Request_Income_Multi_Sub_Item"
+                            [List_Budget_Request_Income_Multi_Week_Plan_Item_Multi_Sub]="List_Budget_Request_Income_Multi_Week_Plan_Item_Multi_Sub"
+                            [List_Budget_Request_Income_Multi_Plan_Item_Multi_Sub]="List_Budget_Request_Income_Multi_Plan_Item_Multi_Sub"
+                            [List_Budget_Request_Income_Multi_Month_Plan_Item]="List_Budget_Request_Income_Multi_Month_Plan_Item"
+                            [List_Budget_Request_Income_Multi_Item_Sub]="List_Budget_Request_Income_Multi_Item_Sub"
+                            [Budget_Request_Income]="Budget_Request_Income"
+                            [Budget_Request_Income_Detail]="Budget_Request_Income_Detail"
+                            [Budget_Request_Income_Project_Detial]="Budget_Request_Income_Project_Detial"
+                            (calculatedTotalChange)="onCalculatedTotalChange($event)"
+                            (multiItemSubChange)="onMultiItemSubChange($event)"
+                            (multiMonthPlanItemChange)="onMultiMonthPlanItemChange($event)"
+                            [calculatedTotal_Front]="calculatedTotal_Front"
+                            [add]="add" >
+                        </Project_Form>
+                    </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="btn_save()">บันทึก</button>
+            <button type="button" class="btn btn-danger"><a href="javascript:void(0);" data-bs-dismiss="modal"
+                    id="cdFullmodal" (click)="modal.close('Close click')"><i
+                        class="ri-close-line me-1 align-middle"></i>
+                    Close</a></button>
+        </div>
+    </div>
+</ng-template><!-- end Modal-->

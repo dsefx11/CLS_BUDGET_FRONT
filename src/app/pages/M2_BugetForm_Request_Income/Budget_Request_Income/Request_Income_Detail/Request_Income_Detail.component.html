@@ -1,0 +1,211 @@
+<section class="card card-content">
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-md-12 text-left">
+            <span style="font-size:14pt;font-weight:bold">
+                {{Sub_From_Name}}
+                <!-- คำขอเงินรายได้ -->
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-left">
+            <!-- Nav tabs -->
+            <ul ngbNav #Border="ngbNav" [activeId]="1" class="nav nav-tabs nav-border-top nav-border-top-primary mb-3">    
+                <li [ngbNavItem]="1">
+                    <a ngbNavLink>แบบฟอร์มตัวคูณ</a>
+                    <ng-template ngbNavContent>
+                        <div style="height:15px"></div>
+                        <div class="row">
+                            <div class="col-md-12 text-left">
+                                <button type="button" class="btn btn-soft-primary waves-effect waves-light"
+                                    (click)="add_form_detail()">เพิ่มข้อมูล</button>
+                            </div>
+                        </div>
+                        <div style="height:15px"></div>
+                        <div class="row">
+                            <div class="col-lg-12" style="overflow-x: scroll; width: 100%">
+                                <div class="table">
+                                    <table class="table table-gridjs" style="width:120%" > 
+                                        <thead>
+                                            <tr class="tr-center">
+                                                <th rowspan="3"></th>
+                                                <th rowspan="3" class="text-center" style="width: 5%">ลำดับ</th>
+                                                <th rowspan="3" class="text-center" style="width: 15%">รายการ</th>
+                                                <th rowspan="3" class="text-center" style="width: 10%">ตัวคูณ</th>
+                                                <th rowspan="3" class="text-center" style="width: 7%">ผลรวม</th>
+                                                <th colspan="12" class="text-center">แผนการใช้จ่ายงบประมาณ (ร้อยละ)</th>
+                                            </tr>
+                                            <tr>
+                                                <th colspan="12" class="text-center">ปีงบประมาณ {{fiscalYear}}</th>
+                                            </tr>
+                                            <tr class="tr-center">
+                                                <th *ngFor="let month of months" class="text-center month-header" >
+                                                    {{month.name}}/{{month.year}}
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody *ngFor="let item of List_Budget_Request_Income_Multi_Item; let i = index">
+                                            <tr class="tr-center">
+                                                <!-- ส่วนรายการและราคา -->
+                                                <td class="text-center align-middle" rowspan="2">
+                                                    <button type="button" class="btn btn-ghost-danger waves-effect waves-light" (click)="btn_del_Detail_item(i)">
+                                                        <i class="ri-delete-bin-6-fill" style="color: orangered;font-size: 20px;"></i>
+                                                    </button>
+                                                </td>
+                                                <td class="text-center align-middle" rowspan="2">{{i + 1}}</td>
+                                                <td  rowspan="2">
+                                                    <textarea class="form-control" rows="5" [(ngModel)]="item.List_Name" style="width:100%;height:180px;resize:vertical;"></textarea>
+                                                </td>
+                                                <td rowspan="2">
+                                                    <div class="cell-wrapper">
+                                                        <div class="cell-row">
+                                                            <!-- <div class="number-box">3</div> -->
+                                                            <!-- <div class="amount-box">
+                                                                <input type="number" class="amount-input" step="0.01" [(ngModel)]="item.Plan3_Qty" (ngModelChange)="cal_qty_plan(item)">
+                                                            </div>
+                                                            <div class="input-box">
+                                                                <input type="text" placeholder="ระบุหน่วยนับ" [(ngModel)]="item.Plan3_Unit_Name">
+                                                            </div> -->
+                                                            <input type="number" class="form-control" step="0.01" [(ngModel)]="item.Plan1_Qty" (ngModelChange)="cal_qty_plan(item)">
+                                                            <input type="text" class="form-control" placeholder="ระบุหน่วยนับ" [(ngModel)]="item.Plan1_Unit_Name" >
+                                                        </div>
+                                                        <div class="cell-row">
+                                                            <input type="number" class="form-control" step="0.01" [(ngModel)]="item.Plan2_Qty" (ngModelChange)="cal_qty_plan(item)">
+                                                            <input type="text" class="form-control" placeholder="ระบุหน่วยนับ" [(ngModel)]="item.Plan2_Unit_Name" >
+                                                        </div>
+                                                        <div class="cell-row">
+                                                            <input type="number" class="form-control" step="0.01" [(ngModel)]="item.Plan3_Qty" (ngModelChange)="cal_qty_plan(item)">
+                                                            <input type="text" class="form-control" placeholder="ระบุหน่วยนับ" [(ngModel)]="item.Plan3_Unit_Name" >
+                                                        </div>
+                                                        <div class="cell-row">
+                                                            <input type="number" class="form-control" step="0.01" [(ngModel)]="item.Plan4_Qty" (ngModelChange)="cal_qty_plan(item)">
+                                                            <input type="text" class="form-control" placeholder="ระบุหน่วยนับ" [(ngModel)]="item.Plan4_Unit_Name" >
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                    <td>
+                                                     <label>รวมรายการ</label>
+                                                    <br>
+                                                    <span style="color: orangered;font-weight: bold;">{{ MasterService.show_fix(item.Month_Qty_Total) }}</span>
+                                                    <br>
+                                                    <label>รวมแผนงาน</label>
+                                                    <br>
+                                                    <span style="color: orangered;font-weight: bold;">{{item.Plan_Qty_Total}}</span>
+                                                </td>
+                    
+                    
+                                                <!-- ส่วนแผนรายเดือน -->
+                                                <td *ngFor="let month of months; let m_index = index" class="text-center align-middle">
+                                                     <input type="number" class="form-control text-center" placeholder="แผนงาน" onkeypress="return isNumber(event);" [(ngModel)]="item['Month'+ (month.number) + '_Qty']" (ngModelChange)="cal_qty_month(item)" />
+                                                </td>
+                                            </tr>
+                                            <tr class="tr-center">
+                                                <td>
+                                                    <label>ผลรวมรายการ</label>
+                                                    <br>
+                                                    <span style="color: orangered;font-weight: bold;">{{ MasterService.show_fix(item.Month_Amount_Total) }}</span>
+                                                </td>
+                                                <td *ngFor="let month of months" class="align-middle">
+                                                     <input type="number" class="form-control text-right" placeholder="0.00" step="0.01" [(ngModel)]="item['Month'+ (month.number) + '_Amount']" (ngModelChange)="cal_qty_month_amount(item)" />
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                        <tfoot>
+                                            <td></td>
+                                            <td></td>
+                                            <td style="text-align:right">รวม :</td>
+                                            <td style="text-align:center">
+                                                {{calculatedTotal }}
+                                                {{calculatedTotal_Front}} 
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tfoot>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </li>
+                <li [ngbNavItem]="2">
+                    <a ngbNavLink>แบบฟอร์มรายละเอียด</a>
+                    <ng-template ngbNavContent>
+                        <div *ngIf="Sub_From_Name == 'ค่าอาหารทำการล่วงเวลา'">
+                            <div style="height:15px"></div>
+                            <div class="row">
+                                <div class="col-md-12 text-left">
+                                    <button type="button" class="btn btn-soft-warning waves-effect waves-light"
+                                        (click)="add_form_detail_overtime()">เพิ่มข้อมูล</button>
+                                </div>
+                            </div>
+                            <Overtime_Form [List_Budget_Request_Detail_Item]="List_Budget_Request_Detail_Item" [Budget_Request_Detail_Item]="Budget_Request_Detail_Item"
+                            [Select_Form_Module]="Select_Form_Module"
+                            [List_Mas_Expense_Cost_Rate]="List_Mas_Expense_Cost_Rate">
+                            </Overtime_Form>
+                        </div>
+                        <div *ngIf="Sub_From_Name == 'ค่าเบี้ยประชุมคณะกรรมการ'">
+                            <Conference_Compensation_Form></Conference_Compensation_Form>
+                        </div>
+                        <div *ngIf="Sub_From_Name == 'เงินเพิ่มสำหรับตำแหน่งที่มีเหตุผลพิเศษผู้ปฏิบัติงานด้านสาธารณสุข (พตส.)'">
+                            <PublicHealth_Compensation_Form></PublicHealth_Compensation_Form>
+                        </div>
+                        <div *ngIf="Sub_From_Name == 'เงินเพิ่มสำหรับแพทย์ ทันตแพทย์ และเภสัชกรผู้ไม่ทำเวชปฎิบัติส่วนตัวหรือปฏิบัติงานในโรงพยาบาลเอกชน'">
+                            <NoPrivate_Compensation_Form></NoPrivate_Compensation_Form>
+                        </div>
+                        <div *ngIf=" Sub_From_Name =='ค่าตอบแทนอื่น'">
+                            <Other_Service_Form></Other_Service_Form>
+                        </div>
+                        <!-- 6(4.4) -->
+                        <div *ngIf=" Sub_From_Name =='ค่าซ่อมแซมยานพาหนะและขนส่ง'">
+                            <Repair_Vehicle_Form></Repair_Vehicle_Form>
+                        </div>
+                        <div *ngIf=" Sub_From_Name =='ค่าซ่อมแซมครุภัณฑ์'">
+                            <Repair_Articles_Form></Repair_Articles_Form>
+                        </div>
+                        <div *ngIf=" Sub_From_Name =='ค่าซ่อมแซมสิ่งก่อสร้าง'">
+                            <Repair_Buildings_Form></Repair_Buildings_Form>
+                        </div>
+                        <!-- 6(4.5) -->
+                        <div *ngIf=" Sub_From_Name =='ค่าเช่ารถยนต์'">
+                            <RentCar_Form></RentCar_Form>
+                        </div>
+                        <div *ngIf=" Sub_From_Name =='ครุภัณฑ์โฆษณาและเผยแพร่'">
+                            <Articles_Form></Articles_Form>
+                        </div>
+                        <div *ngIf=" Sub_From_Name =='ครุภัณฑ์งานบ้านงานครัว'">
+                            <Articles_Form></Articles_Form>
+                        </div>
+                        <div *ngIf=" Sub_From_Name =='ครุภัณฑ์ไฟฟ้าและวิทยุ'">
+                            <Articles_Form></Articles_Form>
+                        </div>
+                        <div *ngIf=" Sub_From_Name =='รายการสิ่งก่อสร้าง'">
+                            <Buildings_Form></Buildings_Form>
+                        </div>
+                        <div *ngIf=" Sub_From_Name =='ครุภัณฑ์สำนักงาน'">
+                            <Articles_Form></Articles_Form>
+                        </div>
+                    </ng-template>
+                </li>
+            </ul>
+            <div class="tab-content text-muted">
+                <div [ngbNavOutlet]="Border"></div>
+            </div>
+            <!-- End Nav tabs -->
+        </div>
+    </div>
+   
+</section>
+
+

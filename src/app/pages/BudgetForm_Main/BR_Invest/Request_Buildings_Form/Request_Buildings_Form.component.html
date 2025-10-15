@@ -1,0 +1,171 @@
+<section class="card card-content">
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-md-12 text-left">
+            <span style="font-size:14pt;font-weight:bold">
+                {{Form_Name}}
+            </span>
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-md-12 text-right">
+            <button type="button" class="btn btn-soft-primary waves-effect waves-light"
+                (click)="add_form_detail()">เพิ่มข้อมูล</button>
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="table">
+                <table class="table table-gridjs">
+                    <thead>
+                        <tr class="tr-center">
+                            <th style="width: 5%;" rowspan="2">ลำดับ</th>
+                            <th rowspan="2">
+                                ความสำคัญ
+                            </th>
+                            <th rowspan="2">
+                                รายการ
+                            </th>
+                            <th colspan="2">
+                                ประเภทสิ่งก่อสร้าง
+                            </th>
+                            <th rowspan="2">
+                                รายการผูกผัน
+                            </th>
+                            <th style="width: 5%;" rowspan="2">ลบ</th>
+                        </tr>
+                        <tr class="tr-center">
+                            <th>
+                                ปีเดียว
+                            </th>
+                            <th>
+                                ผูกผัน
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(data of List_Budget_Request_Detail_Item; track $index){
+                        <tr class="tr-center">
+                            <!-- onkeypress="return isNumber(event);" -->
+                            <td style="text-align: center;">
+                                {{ $index + 1 }}
+                            </td>
+                            <td>
+                                <ng-select [items]="List_Mas_Importance" bindLabel="Importance_Name"
+                                    bindValue="Importance_Id" [(ngModel)]="data.Importance_Id"
+                                    [placeholder]="'กรุณาเลือก'" (change)="Choose_ddl_Mas_Importance(data)">
+                                    <ng-template ng-option-tmp let-s1="item">
+                                        {{ s1.Importance_Name}}
+                                    </ng-template>
+                                </ng-select>
+                            </td>
+                            <td>
+                                <input class="form-control" type="text" title="รายการ"
+                                    [(ngModel)]="data.Other_Expense_Name" />
+
+                            </td>
+
+                            <td>
+                                <input class="form-check-input" type="checkbox" [checked]="data.Building_Type_Id === 1"
+                                    (change)="onChangeCheckBox_Building_Type(data.Building_Type_Id, 1,data)" />
+                            </td>
+                            <td>
+                                <input class="form-check-input" type="checkbox" [checked]="data.Building_Type_Id === 2"
+                                    (change)="onChangeCheckBox_Building_Type(data.Building_Type_Id, 2,data)" />
+                            </td>
+                            <td>
+                                <!-- กรณีปีเดียว -->
+                                <ng-container *ngIf="data.Building_Type_Id === 1">
+                                    <div class="row mb-2">
+                                        <div class="col-md-4">ปี {{Bgyear}}:</div>
+                                        <div class="col-md-8">
+                                            <div class="input-group">
+                                                <input type="number" class="form-control text-end"
+                                                    [(ngModel)]="data.Qty_Building_1"
+                                                    (ngModelChange)="OnChange_calculateTotal_Year(data)"
+                                                    placeholder="จำนวน" onkeypress="return isNumber(event);" />
+                                                <input type="number" class="form-control text-end"
+                                                    [(ngModel)]="data.Price_Building_1"
+                                                    (ngModelChange)="OnChange_calculateTotal_Year(data)"
+                                                    placeholder="ราคา" step="0.01" />
+                                                <span class="input-group-text">=</span>
+                                                <input type="number" class="form-control text-end" step="0.01"
+                                                    [(ngModel)]="data.Total_Building_1" disabled
+                                                    placeholder="รวมทั้งสิ้น" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+
+                                <!-- กรณีผูกพัน -->
+                                <ng-container *ngIf="data.Building_Type_Id === 2">
+                                    <div class="row mb-2" *ngFor="let i of [1,2,3,4]; let idx = index">
+                                        <div class="col-md-4">ปี {{ (Bgyear * 1) + idx }}:</div>
+                                        <div class="col-md-8">
+                                            <div class="input-group">
+                                                <input type="number" class="form-control text-end"
+                                                    [(ngModel)]="data['Qty_Building_' + (i)]"
+                                                    (ngModelChange)="OnChange_calculateTotal_Year(data)"
+                                                    placeholder="จำนวน" onkeypress="return isNumber(event);" />
+                                                <input type="number" class="form-control text-end"
+                                                    [(ngModel)]="data['Price_Building_' + (i)]"
+                                                    (ngModelChange)="OnChange_calculateTotal_Year(data)"
+                                                    placeholder="ราคา" step="0.01" />
+                                                <span class="input-group-text">=</span>
+                                                <input type="number" class="form-control text-end" step="0.01"
+                                                    [(ngModel)]="data['Total_Building_' + (i)]" disabled
+                                                    placeholder="รวมทั้งสิ้น" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-ghost-danger waves-effect waves-light"
+                                    (click)="btn_del_Detail_item($index)">
+                                    <i class="ri-delete-bin-6-fill" style="color: orangered;font-size: 20px;"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <div class="row">
+                                    <div class="col-md-1"></div>
+                                    <div class="col-md-8 text-right">รวม :</div>
+                                    <div class="col-md-3 text-right">
+                                        {{calculatedTotal }}
+                                        {{calculatedTotal_Front}}
+                                    </div>
+                                </div>
+                            </td>
+                            <td></td>
+                        </tr>
+                    </tfoot>
+                    <!-- <tfoot>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align:right">รวม :</td>
+                        <td style="text-align:center">
+                            {{calculatedTotal }}
+                            {{calculatedTotal_Front}}
+
+                        </td>
+                        <td></td>
+                    </tfoot> -->
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

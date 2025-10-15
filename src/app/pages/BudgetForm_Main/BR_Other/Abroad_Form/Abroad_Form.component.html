@@ -1,0 +1,186 @@
+<section class="card card-content">
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-12 text-left">
+            <span style="font-size:14pt;font-weight:bold">
+                {{Form_Name}}
+            </span>
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-2">
+            โครงการ/หลักสูตร
+        </div>
+        <div class="col-lg-4">
+            <input type="text" class="form-control" [(ngModel)]="Budget_Request_Detail.Project_Name" />
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-2">
+            ประเทศที่เดินทาง :
+        </div>
+        <div class="col-lg-4">
+            <ng-select [items]="List_Mas_Country" bindLabel="Country_Name" bindValue="Country_Id" [(ngModel)]="Budget_Request_Detail.Country_Id"
+                [placeholder]="'กรุณาเลือก'" (change)="choose_ddl_Mas_Country(Budget_Request_Detail)">
+                <ng-template ng-option-tmp let-main_s1="item">
+                    {{ main_s1.Country_Name}}
+                </ng-template>
+            </ng-select>
+        </div>
+        <div class="col-lg-2 text-right">
+            กลุ่มประเทศ :
+        </div>
+        <div class="col-lg-3">
+            <ng-select [items]="List_Mas_Country_Group" bindLabel="Country_Group_Name" bindValue="Country_Group" [(ngModel)]="Budget_Request_Detail.Country_Group_Id" disabled>
+                <ng-template ng-option-tmp let-main_s2="item">
+                    {{ main_s2.Country_Group_Name}}
+                </ng-template>
+            </ng-select>
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-2">กรณีข้อตกลง</div>
+        <div class="col-lg-1">
+            <!-- มี -->
+            <input class="form-check-input" type="checkbox" [checked]="Budget_Request_Detail.Agreement_Id === 1"
+                (change)="onChangeCheckBox_Agreement(Budget_Request_Detail.Agreement_Id, 1)" />
+            มี
+        </div>
+        <div class="col-lg-1">
+            <!-- ไม่มี -->
+            <input class="form-check-input" type="checkbox" [checked]="Budget_Request_Detail.Agreement_Id === 2"
+                (change)="onChangeCheckBox_Agreement(Budget_Request_Detail.Agreement_Id, 2)" />
+            ไม่มี
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-2">
+            วัตถุประสงค์
+        </div>
+        <div class="col-lg-4">
+            <input type="text" class="form-control" [(ngModel)]="Budget_Request_Detail.Objective" />
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-2">
+            กลุ่มเป้าหมาย
+        </div>
+        <div class="col-lg-4">
+            <input type="text" class="form-control" [(ngModel)]="Budget_Request_Detail.Target_Group" />
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-2">
+            ผลประโยชน์ที่จะได้รับ
+        </div>
+        <div class="col-lg-4">
+            <input type="text" class="form-control" [(ngModel)]="Budget_Request_Detail.Benefits" />
+        </div>
+    </div>
+    
+    <hr />
+    <br />
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-md-12 text-right">
+            <button type="button" class="btn btn-soft-primary waves-effect waves-light"
+                (click)="add_form_detail()">เพิ่มข้อมูล</button>
+        </div>
+    </div>
+    <div style="height:15px"></div>
+    <div class="row">
+        <div class="col-lg-lg-12">
+            <div class="table">
+                <table class="table table-gridjs">
+                    <thead>
+                        <tr class="tr-center">
+                            <th style="width: 2%;" >ลำดับ</th>
+                            <th style="width: 15%;">
+                                ค่าใช้จ่าย
+                            </th>
+                            <th style="width: 8%;">
+                                ครั้ง/รุ่น
+                            </th>
+                            <th style="width: 8%;">
+                                จำนวนคน
+                            </th>
+                            <th style="width: 8%;">
+                                จำนวนวัน
+                            </th>
+                            <th style="width: 8%;">
+                                อัตราค่าใช้จ่าย
+                            </th>
+                            <th style="width: 10%;">
+                                รวม
+                            </th>
+                            
+                            <th style="width: 8%;">ลบ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for(data of List_Budget_Request_Detail_Item; track $index){
+                        <tr class="tr-center">
+                            <td style="text-align: center;">
+                                {{ $index + 1 }}
+                            </td>
+                            <td>
+                                <ng-select [items]="List_Mas_Expense_Cost_Rate" bindLabel="Cost_Name" bindValue="Cost_Id"
+                                    [(ngModel)]="data.Fk_Cost_Id" [placeholder]="'กรุณาเลือก'" (change)="choose_ddl_Cost_Rate(data)">
+                                    <ng-template ng-option-tmp let-s1="item">
+                                        {{ s1.Cost_Name}}
+                                    </ng-template>
+                                </ng-select>
+                            </td>
+                            <td>
+                                <input class="form-control" type="number" title="ครั้ง/รุ่น" [(ngModel)]="data.Times"
+                                    onkeypress="return isNumber(event);" (keyup)="cal_qty_item(data)" />
+                            </td>
+                            <td>
+                                <input class="form-control" type="number" title="จำนวนคน" [(ngModel)]="data.People"
+                                    onkeypress="return isNumber(event);" (keyup)="cal_qty_item(data)" />
+                            </td>
+                            <td>
+                                <input class="form-control" type="number" title="จำนวนวัน" [(ngModel)]="data.Qty_Day"
+                                    onkeypress="return isNumber(event);" (keyup)="cal_qty_item(data)" />
+                            </td>
+                            <td>
+                                <input class="form-control" type="number" title="อัตราค่าใช้จ่าย" [(ngModel)]="data.Cost_Amount"
+                                      disabled />
+                            </td>                           
+                            <td>
+                                <input class="form-control" type="number" title="รวม ครั้ง/รุ่น x จำนวนคน x จำนวนวัน x อัตราค่าใช้จ่าย" [(ngModel)]="data.Total"
+                                      disabled />
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-ghost-danger waves-effect waves-light" (click)="btn_del_Detail_item($index)">
+                                    <i class="ri-delete-bin-6-fill" style="color: orangered;font-size: 20px;"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td style="text-align:right">รวม :</td>
+                        <td style="text-align:center">
+                            {{calculatedTotal }}
+                            {{calculatedTotal_Front}}
+
+                        </td>
+                        <td></td>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>

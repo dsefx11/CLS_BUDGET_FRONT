@@ -1,0 +1,416 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0 flex-grow-1">ตัวชี้วัด</h4>
+            </div><!-- end card header -->
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-lg-9 text-right">
+                    </div>
+                    <div class="col-lg-1 text-right">
+                        ปีงบประมาณ:
+                    </div>
+                    <div class="col-lg-2 text-right">
+                        <ng-select [(ngModel)]="select_year">
+                            <ng-option *ngFor="let item of list_year" [value]="item">
+                                {{item}}
+                            </ng-option>
+                        </ng-select>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-lg-4 text-right">
+                        <div class="search-box d-inline-block mb-2">
+                            <input type="text" class="form-control search" placeholder="Search..."
+                                [(ngModel)]="service.searchTerm">
+                            <i class="ri-search-line search-icon"></i>
+                        </div>
+                    </div>
+                    <div class="col-lg-7 text-right">
+
+                    </div>
+                    <div class="col-lg-1 text-right">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                            data-bs-target="#exampleModalgrid" (click)="fullModal(fullDataModal,old_indicator)">
+                            เพิ่มตัวชี้วัด
+                        </button>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-gridjs">
+                        <thead>
+                            <tr style="text-align: center;">
+                                <th style="width: 5%;">ลำดับ</th>
+                                <th class="sort" style="width: 8%;" (click)="onSort('BgYear')">ปีงบประมาณ</th>
+                                <th class="sort" style="width: 10%;" (click)="onSort('Indicators_Number')">
+                                    ประเภทตัวชี้วัด</th>
+                                <th class="sort" style="width: 15%;" (click)="onSort('Indications_Name')">ชื่อตัวชี้วัด
+                                </th>
+                                <th class="sort" style="width: 10%;" (click)="onSort('Unit_Name')">หน่วยตัวชี้วัด</th>
+                                <th class="sort" style="width: 15%;" (click)="onSort('Indications_Goal')">ค่าเป้าหมาย
+                                </th>
+                                <th class="sort" style="width: 15%;" (click)="onSort('Department_Name')">
+                                    หน่วยงานที่รับผิดชอบ</th>
+                                <th style="width: 5%;">แก้ไข</th>
+                                <th style="width: 5%;">ลบ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for(data of List_Indications_Template; track $index){
+                            <tr>
+                                <td style="text-align: center;">{{$index + 1}}</td>
+                                <td>
+                                    <ngb-highlight [result]="data.BgYear" [term]="service.searchTerm">{{data.BgYear}}
+                                    </ngb-highlight>
+                                </td>
+                                <td><ngb-highlight [result]="data.Indications_Name"
+                                        [term]="service.searchTerm">{{data.Indications_Name}}</ngb-highlight></td>
+                                <td><ngb-highlight [result]="data.Indicators_Type"
+                                        [term]="service.searchTerm">{{data.Indicators_Type}}</ngb-highlight></td>
+                                <td><ngb-highlight [result]="data.Unit_Name"
+                                        [term]="service.searchTerm">{{data.Unit_Name}}</ngb-highlight></td>
+                                <td><ngb-highlight [result]="data.Indications_Goal"
+                                        [term]="service.searchTerm">{{data.Indications_Goal}}</ngb-highlight></td>
+                                <td><ngb-highlight [result]="data.Indications_Code"
+                                        [term]="service.searchTerm">{{data.Indications_Code}}</ngb-highlight></td>
+                                <td style="text-align: center;">
+                                    <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                        data-bs-target="#exampleModalgrid" (click)="fullModal(fullDataModal,data)">
+                                        แก้ไข
+                                    </button>
+                                </td>
+                                <td style="text-align: center;">
+                                    <button type="button" class="btn btn-danger" (click)="delExam(data)">
+                                        ลบ
+                                    </button>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <div class="row justify-content-md-between align-items-md-center">
+                    <div class="col-sm-12 col-md-5">
+                        <div class="dataTables_info mb-2" id="tickets-table_info" role="status" aria-live="polite">
+                            Showing
+                            {{service.startIndex}} to
+                            {{service.endIndex}} of {{service.totalRecords}}
+                            entries
+                        </div>
+                    </div>
+                    <!-- Pagination -->
+                    <div class="col-sm-12 col-md-5">
+                        <div class="text-md-right float-md-end gridjs-pagination">
+                            <ngb-pagination [collectionSize]="(total$ | async)!" [(page)]="service.page"
+                                [pageSize]="service.pageSize">
+                            </ngb-pagination>
+                        </div>
+                    </div>
+                    <!-- End Pagination -->
+                </div>
+            </div><!-- end card-body -->
+        </div><!-- end card -->
+    </div>
+    <!-- end col -->
+</div>
+
+<ng-template #fullDataModal let-modal>
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalFullscreenLabel">ตัวชี้วัด</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                (click)="modal.dismiss('Close click')"></button>
+        </div>
+        <div class="modal-body">
+            <div class="card">
+                <div class="card-header align-items-center d-flex">
+                    <h4 class="card-title mb-0 flex-grow-1">ตัวชี้วัด</h4>
+                    <div class="flex-shrink-0">
+                        <div class="form-check form-switch form-switch-right form-switch-md">
+                        </div>
+                    </div>
+                </div><!-- end card header -->
+                <div class="card-body">
+                    <ng-stepper #cdkStepper [linear]="true" class="step-arrow-nav wizard">
+                        <cdk-step [optional]="true">
+                            <ng-template cdkStepLabel>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="steparrow-1-tab" data-bs-toggle="pill"
+                                        data-bs-target="#steparrow-1" type="button" role="tab"
+                                        aria-controls="steparrow-1" aria-selected="true">ส่วนที่ 1 <span
+                                            class="badge bg-primary ms-2" style="font-size: 12px;">STEP
+                                            1</span></button>
+                                </li>
+                            </ng-template>
+                            <div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-1">
+                                    </div>
+                                    <div class="col-lg-1">
+                                        ตัวชี้วัด:
+                                    </div>
+                                    <div class="col-lg-5">
+                                        <ng-select [(ngModel)]="Indications_Template.Fk_Indicators_Head"
+                                            (change)="getIndications_Head()">
+                                            <ng-option *ngFor="let item of List_Indications_Head"
+                                                [value]="item.Indications_Head_Id">
+                                                {{item.Indications_Name}}
+                                            </ng-option>
+                                        </ng-select>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-1">
+                                    </div>
+                                    <div class="col-lg-1">
+                                        ปีงบประมาณ:
+                                    </div>
+                                    <div class="col-lg-2">
+                                        {{Indications_Template.BgYear}}
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-1">
+                                    </div>
+                                    <div class="col-lg-1">
+                                        ประเภทตัวชี้วัด:
+                                    </div>
+                                    <div class="col-lg-2">
+                                        {{Indications_Head.Indicators_Number}}
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-1">
+                                    </div>
+                                    <div class="col-lg-1">
+                                        หน่วยวัด:
+                                    </div>
+                                    <div class="col-lg-2">
+                                        {{Indications_Head.Unit_Name}}
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-1">
+                                    </div>
+                                    <div class="col-lg-1">
+                                        ค่าเป้าหมาย:
+                                    </div>
+                                    <div class="col-lg-2">
+                                        {{Indications_Head.Indications_Goal}}
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-1">
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <label for="exampleFormControlTextarea5"
+                                            class="form-label">คำอธิบายตัวชี้วัด:</label>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <textarea class="form-control"
+                                            [(ngModel)]="Indications_Template.Indicators_Description"
+                                            id="exampleFormControlTextarea5" rows="4"></textarea>
+                                    </div>
+                                </div>
+                                <hr />
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-2">
+                                        <button type="button" class="btn btn-success" (click)="addTemplateDev()">
+                                            <i class="bx bxs-plus-circle"></i> เพิ่มขั้นตอนที่ใช้พัฒนา
+                                        </button>
+                                    </div>
+                                </div>
+                                @for(data of List_Indications_Template_Development; track $index){
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-1">
+                                    </div>
+                                    <div class="col-lg-1">
+                                        {{$index + 1}}
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <label for="StepDev" class="form-label">ขั้นตอนที่ใช้พัฒนา</label>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <input type="text" class="form-control" id="StepUsed_Develop"
+                                            [(ngModel)]="data.Used_Develop" placeholder="ขั้นตอนที่ใช้พัฒนา">
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <label for="StepDev" class="form-label">เอกสารที่ใช้ตรวจ</label>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <input type="text" class="form-control" id="StepDocument"
+                                            [(ngModel)]="data.Document" placeholder="เอกสารที่ใช้ตรวจ">
+                                    </div>
+                                    <div class="col-lg-1">
+                                        <label for="StepScored" class="form-label">คะแนน</label>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <input type="number" class="form-control" id="StepScored"
+                                            [(ngModel)]="data.Scored" placeholder="คะแนน">
+                                    </div>
+                                </div>
+                                }
+                            </div>
+
+                            <!-- wizard-tab -->
+                            <div class="d-flex align-items-end gap-3 mt-4 float-end">
+                                <!-- <button type="button" class="btn btn-primary btn-label right ms-auto nexttab"
+                                data-nexttab="steparrow-description-info-tab"><i
+                                    class="ri-calculator-line label-icon align-middle fs-16 ms-2"></i>คำนวณ</button> -->
+                                <button type="button" class="btn btn-success btn-label right ms-auto nexttab"
+                                    style="margin-right: 30px;" data-nexttab="steparrow-2-tab" cdkStepperNext><i
+                                        class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>ถัดไป</button>
+                            </div>
+                        </cdk-step>
+                        <cdk-step [optional]="false">
+                            <ng-template cdkStepLabel>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link done" id="steparrow-2-tab" data-bs-toggle="pill"
+                                        data-bs-target="#steparrow-2" type="button" role="tab"
+                                        aria-controls="steparrow-2" aria-selected="true">ส่วนที่ 2 <span
+                                            class="badge bg-primary ms-2" style="font-size: 12px;">STEP
+                                            2</span></button>
+                                </li>
+                            </ng-template>
+                            <div>
+                                <br />
+                                <div class="row">
+                                    @for(data of List_Mas_Balanced_Scorecard; track $index){
+                                    <div class="col-lg-1">
+                                        <input class="form-check-input" type="checkbox"
+                                            id="inlineCheckbox{{$index + 1}}" [checked]="data.isChecked"
+                                            (change)="onCheckboxChange(data)">
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label class="form-check-label"
+                                            for="inlineCheckbox{{$index + 1}}">{{data.Scorecard_Name}}</label>
+                                    </div>
+
+                                    }
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <h3>สอดคล้องกับตัวชี้วัด</h3>
+                                    </div>
+                                </div>
+                                @for(data of List_Mas_Consistency_Indicator; track $index){
+                                <br />
+                                <div class="row">
+                                    <div class="col-lg-1">
+                                        <input class="form-check-input" type="checkbox"
+                                            id="consisCheckbox{{$index + 1}}" [checked]="data.isChecked"
+                                            (change)="updateCheckbox(data)">
+
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <label class="form-check-label"
+                                            for="consisCheckbox{{$index + 1}}">{{data.Consistency_Name}}</label>
+                                    </div>
+                                </div>
+                                <div *ngIf="data.isChecked">
+                                    @for(item of filMastrategic(List_Mas_Strategic!, data.Consistency_Id); track
+                                    $index){
+                                    <br />
+                                    <div class="row">
+                                        <div class="col-lg-1">
+                                        </div>
+                                        <div class="col-lg-1">
+                                            <input class="form-check-input" type="checkbox"
+                                                id="stegicCheckbox{{$index + 1}}" [checked]="item.isChecked"
+                                                (change)="updateMastrategicCheckbox(filMastrategic(List_Mas_Strategic!, data.Consistency_Id),item)">
+
+                                        </div>
+                                        <div class="col-lg-2">
+                                            <label class="form-check-label"
+                                                for="stegicCheckbox{{$index + 1}}">{{item.Strategic_Name}}</label>
+                                        </div>
+                                    </div>
+                                    }
+                                </div>
+                                }
+                            </div>
+                            <!-- wizard-tab -->
+                            <div class="d-flex align-items-start gap-3 mt-4 float-start">
+                                <button type="button" class="btn btn-light btn-label previestab"
+                                    data-previous="steparrow-1-tab" cdkStepperPrevious><i
+                                        class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i>
+                                    ย้อนกลับ</button>
+                            </div>
+                            <div class="d-flex align-items-end gap-3 mt-4 float-end">
+
+                                <button type="button" class="btn btn-success btn-label right ms-auto nexttab"
+                                    style="margin-right: 30px;" data-nexttab="steparrow-3-tab" cdkStepperNext><i
+                                        class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>ถัดไป</button>
+                            </div>
+                        </cdk-step>
+                        <cdk-step [optional]="false">
+                            <ng-template cdkStepLabel>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link done" id="steparrow-3-tab" data-bs-toggle="pill"
+                                        data-bs-target="#steparrow-3" type="button" role="tab"
+                                        aria-controls="steparrow-3" aria-selected="true">ส่วนที่ 3 <span
+                                            class="badge bg-primary ms-2" style="font-size: 12px;">STEP
+                                            3</span></button>
+                                </li>
+                            </ng-template>
+                            <div>
+
+                            </div>
+                            <!-- wizard-tab -->
+                            <div class="d-flex align-items-start gap-3 mt-4 float-start">
+                                <button type="button" class="btn btn-light btn-label previestab"
+                                    data-previous="steparrow-2-tab" cdkStepperPrevious><i
+                                        class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i>
+                                    ย้อนกลับ</button>
+                            </div>
+                            <div class="d-flex align-items-end gap-3 mt-4 float-end">
+                                <button type="button" class="btn btn-success btn-label right ms-auto nexttab"
+                                    style="margin-right: 30px;" data-nexttab="steparrow-4-tab" cdkStepperNext><i
+                                        class="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>ถัดไป</button>
+                            </div>
+                        </cdk-step>
+                        <cdk-step [optional]="false">
+                            <ng-template cdkStepLabel>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link done" id="steparrow-4-tab" data-bs-toggle="pill"
+                                        data-bs-target="#steparrow-4" type="button" role="tab"
+                                        aria-controls="steparrow-4" aria-selected="true">ส่วนที่ 4 <span
+                                            class="badge bg-primary ms-2" style="font-size: 12px;">STEP
+                                            4</span></button>
+                                </li>
+                            </ng-template>
+                            <div>
+
+                            </div>
+                            <!-- wizard-tab -->
+                            <div class="d-flex align-items-start gap-3 mt-4 float-start">
+                                <button type="button" class="btn btn-light btn-label previestab"
+                                    data-previous="steparrow-3-tab" cdkStepperPrevious><i
+                                        class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i>
+                                    ย้อนกลับ</button>
+                            </div>
+                        </cdk-step>
+                    </ng-stepper>
+                </div><!-- end card-body -->
+            </div>
+        </div>
+        <div class="modal-footer">
+            <a href="javascript:void(0);" class="btn btn-link link-success fw-medium" data-bs-dismiss="modal"
+                id="cdFullmodal" (click)="modal.close('Close click')"><i class="ri-close-line me-1 align-middle"></i>
+                Close</a>
+            <button type="button" class="btn btn-primary" (click)="SaveIndicator()">บันทึก</button>
+        </div>
+    </div><!-- /.modal-content -->
+</ng-template><!-- /.modal-dialog -->
